@@ -55,6 +55,7 @@ def chatgpt(request: ChatRequest):
 # ------------------ 기본 라우트 ------------------
 @app.get("/")
 def home():
+    print(os.getenv("MYSQL_HOST"))
     return "Hello from Flask!"
 
 
@@ -88,6 +89,8 @@ def register(data: RegisterRequest):
         )
 
         conn.commit()
+        cur.close()
+        conn.close()
 
         return {"status": "success"}
 
@@ -95,11 +98,6 @@ def register(data: RegisterRequest):
         if conn:
             conn.rollback()
         raise HTTPException(status_code=500, detail=str(e))
-
-    finally:
-        cur.close()
-        conn.close()
-
 
 # -----------------------로그인-----------
 @app.post(
@@ -113,11 +111,18 @@ def login(data: RegisterRequest):
         conn = get_connection()
         cur = conn.cursor(dictionary=True)
 
+        # 입력 받은 값에서 공백 제거
+        user_id = data.user_id.strip()
+        password = data.password.strip()
+        
         cur.execute(
             "SELECT * FROM users WHERE user_id = %s AND password = %s",
             (data.user_id, data.password),
         )
         existing = cur.fetchone()
+
+        cur.close()
+        conn.close()
 
         if existing:
             return {"로그인 성공": data.user_id}
@@ -127,9 +132,6 @@ def login(data: RegisterRequest):
     except Error as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-    finally:
-        cur.close()
-        conn.close()
 
 
 # ------------------ 1. 세탁기 현황 보기 ------------------
