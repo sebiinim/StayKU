@@ -3,11 +3,8 @@
 +----------+-------------+
 | user_id  | password    |
 +----------+-------------+
-| 1        | 1           |
-| 2        | 2           |
-| 3        | 3           |
-| 4        | 4           |
-| sugi2845 | tjduswl123! |
+| string   | string      |
+| ghkd     | 0909        |
 +----------+-------------+
 ```
 - 이 아이디와 패스워드로 로그인 하면 됨
@@ -16,6 +13,7 @@
 # Laundry & Roommate Management App
 
 Flask + MySQL + OpenAI API + Android Studio 초기 프로젝트
+Render로 서버 배포, TiDB로 Mysql cloud 사용.
 
 ---
 
@@ -55,7 +53,7 @@ venv\Scripts\activate
 (venv) PS C:\Users\User\Desktop\project\server>
 ```
 
-> **\u2714\ufe0f 가상환경 (venv) 활성화하지 않으면 pip install, python app.py 작업이 잘 되지 않음!**
+> **가상환경 (venv) 활성화하지 않으면 pip install, python app.py 작업이 잘 되지 않음!**
 
 
 ### 5. 필요한 패키지 설치
