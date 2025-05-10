@@ -18,8 +18,13 @@ app = FastAPI()
 env_path = Path(__file__).resolve().parent / ".env"
 load_dotenv(dotenv_path=env_path)
 
-# CORS 설정 추가
+# 미들웨어 CORS 설정 추가
 cors_middleware(app)
+
+# 라우터---
+from server.router.auth import auth_router
+
+app.include_router(auth_router, prefix="/auth")
 
 
 # ------------------ OpenAI API 키 ------------------
@@ -54,77 +59,6 @@ def chatgpt(request: ChatRequest):
 @app.get("/")
 def home():
     return "Hello from Flask!"
-
-
-# ------------------ 회원가입 API -----------------
-# ------------------ 요청 모델 ------------------
-class RegisterRequest(BaseModel):
-    user_id: str
-    password: str
-
-
-@app.post(
-    "/register",
-    tags=["Auth"],
-    summary="회원 가입",
-)
-def register(data: RegisterRequest):
-    print(os.getenv("MYSQL_HOST"))
-    conn = None
-    try:
-        conn = get_connection()
-        cur = conn.cursor(dictionary=True)
-
-        cur.execute("SELECT * FROM users WHERE user_id = %s", (data.user_id,))
-        existing = cur.fetchone()
-
-        if existing:
-            raise HTTPException(status_code=400, detail="이미 존재하는 아이디입니다.")
-        cur.execute(
-            "INSERT INTO users (user_id, password) VALUES (%s, %s)",
-            (data.user_id, data.password),
-        )
-
-        conn.commit()
-
-        cur.close()
-        conn.close()
-        return {"status": "success"}
-
-    except Error as e:
-        if conn:
-            conn.rollback()
-        raise HTTPException(status_code=500, detail=str(e))
-
-
-# -----------------------로그인-----------
-@app.post(
-    "/login",
-    tags=["Auth"],
-    summary="로그인",
-)
-def login(data: RegisterRequest):
-    conn = None
-    try:
-        conn = get_connection()
-        cur = conn.cursor(dictionary=True)
-
-        cur.execute(
-            "SELECT * FROM users WHERE user_id = %s AND password = %s",
-            (data.user_id, data.password),
-        )
-        existing = cur.fetchone()
-
-        cur.close()
-        conn.close()
-
-        if existing:
-            return {"로그인 성공": data.user_id}
-        else:
-            raise HTTPException(status_code=401, detail="일치하는 유저 없음")
-
-    except Error as e:
-        raise HTTPException(status_code=500, detail=str(e))
 
 
 # ------------------ 1. 세탁기 전체 현황 보기 ------------------
