@@ -8,20 +8,11 @@ import openai
 from pathlib import Path
 from datetime import datetime, timedelta
 
+from db.get_connection import get_connection
+
 app = FastAPI()
 env_path = Path(__file__).resolve().parent / ".env"
 load_dotenv(dotenv_path=env_path)
-
-
-# ------------------ DB 설정 ------------------
-def get_connection():
-    return mysql.connector.connect(
-        host=os.getenv("MYSQL_HOST"),
-        user=os.getenv("MYSQL_USER"),
-        password=os.getenv("MYSQL_PASSWORD"),
-        database=os.getenv("MYSQL_DB"),
-        port=3306,
-    )
 
 
 # ------------------ OpenAI API 키 ------------------
@@ -89,16 +80,14 @@ def register(data: RegisterRequest):
 
         conn.commit()
 
+        cur.close()
+        conn.close()
         return {"status": "success"}
 
     except Error as e:
         if conn:
             conn.rollback()
         raise HTTPException(status_code=500, detail=str(e))
-
-    finally:
-        cur.close()
-        conn.close()
 
 
 # -----------------------로그인-----------
@@ -119,6 +108,9 @@ def login(data: RegisterRequest):
         )
         existing = cur.fetchone()
 
+        cur.close()
+        conn.close()
+
         if existing:
             return {"로그인 성공": data.user_id}
         else:
@@ -127,21 +119,91 @@ def login(data: RegisterRequest):
     except Error as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-    finally:
-        cur.close()
-        conn.close()
 
-
-# ------------------ 1. 세탁기 현황 보기 ------------------
+# ------------------ 1. 세탁기 전체 현황 보기 ------------------
 @app.get("/washer_status", tags=["washer"], summary="세탁기 현황 보기")
 def washer_status():
-    # 더미 데이터 (실제 MySQL 연동 가능)
-    data = [
-        {"id": 1, "status": "in use", "remaining_time": 20},
-        {"id": 2, "status": "available"},
-        {"id": 3, "status": "in use", "remaining_time": 10},
-    ]
-    return data
+    try:
+        conn = get_connection()
+        cur = conn.cursor(dictionary=True)
+
+        cur.execute("SELECT * FROM washers")
+        data = cur.fetchall()
+
+        if data:
+            return data
+        else:
+            raise HTTPException(
+                status_code=500, detail=f"세탁기 현황 조회 실패, data={data}"
+            )
+
+    except Error as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+# ------------------ 1-1. 사용 가능 세탁기 현황 보기 ------------------
+@app.get(
+    "/washer_status/available", tags=["washer"], summary="사용 가능 세탁기 현황 보기"
+)
+def washer_status_available():
+    try:
+        conn = get_connection()
+        cur = conn.cursor(dictionary=True)
+
+        cur.execute("SELECT * FROM washers WHERE status = 'available'")
+        data = cur.fetchall()
+
+        if data:
+            return data
+        else:
+            raise HTTPException(
+                status_code=500, detail=f"사용 가능 세탁기 현황 조회 실패, data={data}"
+            )
+
+    except Error as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+# ------------------ 1-1. 사용 중인 세탁기 현황 보기 ------------------
+@app.get("/washer_status/in_use", tags=["washer"], summary="사용 중인 세탁기 현황 보기")
+def washer_status_inuse():
+    try:
+        conn = get_connection()
+        cur = conn.cursor(dictionary=True)
+
+        cur.execute("SELECT * FROM washers WHERE status = 'in_use'")
+        data = cur.fetchall()
+
+        if data:
+            return data
+        else:
+            raise HTTPException(
+                status_code=500, detail=f"사용 중인 세탁기 현황 조회 실패, data={data}"
+            )
+
+    except Error as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+# ------------------ 1-5. 세탁기 사용 시작 ------------------
+@app.get(
+    "/washer_start/{washer_id}", tags=["washer"], summary="세탁기 사용 시작 시 등록"
+)
+def washer_start(washer_id: int):
+    try:
+        conn = get_connection()
+        cur = conn.cursor(dictionary=True)
+
+        cur.execute(
+            "UPDATE washers SET status = 'in_use', end_time = NOW() + INTERVAL 45 MINUTE WHERE id = %s",
+            (washer_id,),
+        )
+        conn.commit()
+
+        return washer_id
+
+    except Error as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 
 # ------------------ 1-3. 세탁기 예약 ------------------
@@ -425,8 +487,3 @@ def match_users(user_id):
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-
-
-# ------------------ Flask 실행 ------------------
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)

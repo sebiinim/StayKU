@@ -21,8 +21,23 @@ CREATE TABLE IF NOT EXISTS users (
 CREATE TABLE IF NOT EXISTS washers (
     id INT AUTO_INCREMENT PRIMARY KEY,
     status VARCHAR(10) NOT NULL,
+    end_time DATETIME DEFAULT NULL,
     remaining_time INT
 );
+
+-- 2-1. 세탁기 10개 생성
+INSERT washers (status, end_time, remaining_time)
+VALUES
+('available', NULL, NULL),
+('available', NULL, NULL),
+('available', NULL, NULL),
+('available', NULL, NULL),
+('available', NULL, NULL),
+('available', NULL, NULL),
+('available', NULL, NULL),
+('available', NULL, NULL),
+('available', NULL, NULL),
+('available', NULL, NULL);
 
 -- 3. 세탁기 예약
 CREATE TABLE IF NOT EXISTS reservations (
