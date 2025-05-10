@@ -9,21 +9,17 @@ import openai
 from pathlib import Path
 from datetime import datetime, timedelta
 
-from db.get_connection import get_connection
+from server.db.get_connection import get_connection
+from server.middleware.cors_middleware import cors_middleware
 
 app = FastAPI()
+
+# env 설정 추가
 env_path = Path(__file__).resolve().parent / ".env"
 load_dotenv(dotenv_path=env_path)
 
-app = FastAPI()
 # CORS 설정 추가
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],  # 모든 도메인 허용 (보안상 필요에 따라 제한 가능)
-    allow_credentials=True,
-    allow_methods=["*"],  # 모든 HTTP 메서드 허용
-    allow_headers=["*"],  # 모든 헤더 허용
-)
+cors_middleware(app)
 
 
 # ------------------ OpenAI API 키 ------------------
