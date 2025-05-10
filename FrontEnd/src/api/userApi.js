@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export const login = async (username, password) => {
   try {
-    const response = await axios.post('http://localhost:8000/login', {
+    const response = await axios.post('https://stayku.onrender.com/auth/login', {
       user_id: username,
       password: password,
     });

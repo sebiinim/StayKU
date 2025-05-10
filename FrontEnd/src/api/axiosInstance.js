@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const axiosInstance = axios.create({
-  baseURL: 'http://127.0.0.1:8000/',  // 백엔드 서버 주소
+  baseURL: 'https://stayku.onrender.com/',  // 백엔드 서버 주소
   headers: {
     'Content-Type': 'application/json',
   },

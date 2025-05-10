@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { login } from '../api/userApi';
+import { useNavigate } from 'react-router-dom';  // 라우팅을 위한 useNavigate 추가
+
 
 const LoginForm = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState(''); // 로그인 결과 메시지
+  const navigate = useNavigate();
 
   const handleLogin = async () => {
     try {
@@ -18,6 +21,7 @@ const LoginForm = () => {
       if (data["로그인 성공"] === username) {
         setMessage(`✅ ${data.message}`);
         localStorage.setItem('user_id', username);  // 사용자 ID 저장
+        navigate('/dashboard');
       } else {
         setMessage(`❌ ${data.message}`);
       }
