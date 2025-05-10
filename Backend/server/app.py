@@ -1,3 +1,4 @@
+from contextlib import asynccontextmanager
 from fastapi import FastAPI, HTTPException, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -8,11 +9,27 @@ from dotenv import load_dotenv
 import openai
 from pathlib import Path
 from datetime import datetime, timedelta
+from apscheduler.schedulers.background import BackgroundScheduler
+from server.scheduler.tasks import washer_scheduler
 
 from server.db.get_connection import get_connection
 from server.middleware.cors_middleware import cors_middleware
 
-app = FastAPI()
+# ------------------ 스케줄러 -----------------
+scheduler = BackgroundScheduler()
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    print("[app] Starting scheduler via lifespan")
+    scheduler.add_job(washer_scheduler, "interval", seconds=30)
+    scheduler.start()
+    yield
+    print("[app] Shutting down scheduler")
+    scheduler.shutdown()
+
+
+app = FastAPI(lifespan=lifespan)
 
 # env 설정 추가
 env_path = Path(__file__).resolve().parent / ".env"

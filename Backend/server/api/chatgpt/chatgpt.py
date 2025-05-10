@@ -1,16 +1,18 @@
-from datetime import datetime, timedelta
 import os
-
-from fastapi import HTTPException, APIRouter
-import openai
+from pathlib import Path
+from openai import OpenAI
+from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
-from server.db.get_connection import get_connection
-from mysql.connector import Error
+from dotenv import load_dotenv
 
 router = APIRouter()
 
 # ------------------ OpenAI API 키 ------------------
-openai.api_key = os.getenv("OPENAI_API_KEY")
+# env 설정 추가
+env_path = Path(__file__).resolve().parent / ".env"
+load_dotenv(dotenv_path=env_path)
+
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 
 # ------------------ GPT API 사용 ------
@@ -27,11 +29,16 @@ class ChatResponse(BaseModel):
 @router.post("/chatgpt", response_model=ChatResponse)
 def chatgpt(request: ChatRequest):
     try:
-        response = openai.ChatCompletion.create(
-            model="gpt-4", messages=[{"role": "user", "content": request.message}]
+        response = client.chat.completions.create(
+            model="gpt-4",
+            messages=[
+                {"role": "system", "content": "You are a helpful assistant."},
+                {"role": "user", "content": request.message},
+            ],
+            temperature=0.7,
         )
-        reply = response["choices"][0]["message"]["content"]
-        return {"reply": reply}
+        reply = response.choices[0].message.content.strip()
+        return ChatResponse(reply=reply)
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

@@ -42,6 +42,7 @@ VALUES
 -- 3. 세탁기 예약
 CREATE TABLE IF NOT EXISTS reservations (
     id INT AUTO_INCREMENT PRIMARY KEY,
+    washer_id INT,
     washer_type VARCHAR(10),
     user_id VARCHAR(100),
     reserved_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

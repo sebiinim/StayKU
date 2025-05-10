@@ -1,3 +1,4 @@
+from datetime import datetime
 import os
 
 from fastapi import HTTPException, APIRouter
@@ -14,6 +15,16 @@ def washer_status():
     try:
         conn = get_connection()
         cur = conn.cursor(dictionary=True)
+
+        # 세탁이 끝난 세탁기를 available로 전환
+        cur.execute(
+            "UPDATE washers SET status = %s, end_time = NULL WHERE end_time < %s",
+            (
+                "available",
+                datetime.now(),
+            ),
+        )
+        conn.commit()
 
         cur.execute("SELECT * FROM washers")
         data = cur.fetchall()
