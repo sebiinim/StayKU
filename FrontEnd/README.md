@@ -1,3 +1,13 @@
+# npm start
+*꼭 cd ~StayKU/FrontEnd로 디렉토리 변경하기*
+-> 현재 디렉토리에 package.json이 있어야 start 가능
+
+npm install axios 후 StayKU/FrontEnd에 node_module이 잘 설치되었는지 확인
+-> node_module은 .gitignore됨. 다시 설치 필요
+
+이후 npm start
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
