@@ -45,7 +45,7 @@ button:hover {
 
 /* App 헤더 스타일 */
 .App-header, .Home, .SignupForm {
-  background-color: #282c34; /* 동일한 배경색 적용 */
+  background-color: #282c34;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -66,16 +66,12 @@ input {
   color: black;
 }
 
-
 .signup-text {
   color: white;
   cursor: pointer;
-  font-size: 12px; /* 작은 글자 */
+  font-size: 12px;
 }
 
 .signup-text:hover {
   color: white;
 }
-
-
-

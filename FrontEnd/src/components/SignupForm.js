@@ -27,20 +27,20 @@ function SignupForm() {
 
   return (
     <div className="SignupForm">
-      <h2>회원가입</h2>
+      <h2>Register</h2>
       <input
         type="text"
-        placeholder="아이디"
+        placeholder="Username"
         value={userId}
         onChange={(e) => setUserId(e.target.value)}
-        className="block mb-2 p-2 border border-gray-300 rounded"
+        style={{ padding: '5px', width: '200px' }}
       />
       <input
         type="password"
-        placeholder="비밀번호"
+        placeholder="Password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
-        className="block mb-2 p-2 border border-gray-300 rounded"
+        style={{ padding: '5px', width: '200px' }}
       />
       <button
         onClick={handleSignup}
