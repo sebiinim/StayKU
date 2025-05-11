@@ -1,4 +1,4 @@
-#npm start
+# npm start
 *꼭 cd ~StayKU/FrontEnd로 디렉토리 변경하기*
 -> 현재 디렉토리에 package.json이 있어야 start 가능
 
