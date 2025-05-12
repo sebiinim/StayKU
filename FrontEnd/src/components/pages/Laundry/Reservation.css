@@ -1,0 +1,143 @@
+/* 상단 고정 헤더 */
+.reservation-header {
+    background-color: #282c34;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    position: fixed;       /* 화면에 고정 */
+    top: 0;                /* 화면 최상단 */
+    left: 0;
+    width: 100%;           /* 전체 화면 너비 */
+    z-index: 1000;         /* 다른 요소보다 위에 위치 */
+}
+
+.reservation-header h1 {
+    font-size: 28px;
+    margin: 0;
+}
+
+.reservation-navbar span {
+    margin: 0 15px;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.reservation-navbar span:hover {
+    text-decoration: underline;
+}
+
+/* 예약 메인 영역 */
+.reservation-container {
+    padding: 20px;
+    margin: 100px auto 30px;  /* 상단 고정 메뉴 공간 확보 */
+    max-width: 800px;
+    text-align: center;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+}
+
+.status-section {
+    margin: 10px 0;
+    color: black
+}
+
+/*세탁기 상태 박스*/
+.machine-status {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 10px 0;
+}
+
+.machine {
+    padding: 10px;      
+    border-radius: 5px;
+    font-size: 18px;    
+    color: white;
+    width: 60px;        
+    height: 60px;       
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.available {
+    background-color: #4CAF50;
+}
+
+.in-use {
+    background-color: #888;
+}
+
+/* 상태 표시 (흰색 박스 우측 상단) */
+.status-indicator {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #4CAF50; /* Available 상태일 때 초록 */
+}
+
+.unavailable {
+    color: #888; /* Unavailable 상태일 때 회색 */
+}
+
+/* 예약 입력 폼 */
+.form-section {
+    margin: 20px 0;
+    display: flex;
+    flex-direction: column; /* 세로 배치 */
+    gap: 10px;
+    align-items: center;
+}
+
+/* 입력 항목 제목 스타일 */
+.form-section label {
+    color: #000;      /* 검정색으로 수정 */
+    font-size: 18px;  /* 글자 크기 조금 확대 */
+    margin: 3px 0;    /* 위아래 간격 추가 */
+    font-weight: bold; /* 두껍게 표시 */
+}
+
+.form-input {
+    margin: 1px;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 250px; /* 입력 칸 크기 확대 */
+}
+
+.submit-button {
+    padding: 10px 20px;
+    margin: 15px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.submit-button:hover {
+    background-color: #45a049;
+}
+
+/* 예약 목록 */
+.reservation-list {
+    margin-top: 20px;
+    color: black
+}
+
+.reservation-list ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.reservation-list li {
+    margin: 5px 0;
+}
