@@ -16,22 +16,9 @@ body {
   width: 100%;
 }
 
-/* 고정된 상단 메뉴바 */
-.top_left {
-  background-color: #282c34;
-  color: white;
-  width: 100%;
-  padding: 20px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
-  font-size: 28px;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 1000;
-}
 
 .logo {
-  font-size: 40px;
+  font-size: 45px;
   font-weight: bold;
   margin-right: 50px;
   cursor: pointer;
@@ -43,7 +30,6 @@ body {
 
 .menu {
   display: flex;
-  justify-content: center;
   gap: 40px;
   list-style-type: none;
 }
