@@ -107,21 +107,29 @@ function Reservation() {
                 </div>
             </div>
 
-            {/* 예약 상태 확인 - 건조기*/}
+            {/* 예약 상태 확인 - 건조기 */}
             <div className="status-section">
                 <h2>Select Dryers</h2>
                 <div className="machine-status">
                     {[...Array(8)].map((_, index) => (
                         <div 
                             key={`D${index + 1}`} 
-                            className={`machine ${index === 1 ? 'in-use' : 'available'}`} 
+                            className={`machine ${index === 3 ? 'in-use' : 'available'}`} 
                             onClick={() => openPopup('Dryer', index + 1)}
-                            style={{ cursor: "pointer" }}
+                            style={{ cursor: "pointer", position: "relative" }}  // 위치 지정
                         >
                             D{index + 1}
                         </div>
                     ))}
                 </div>
+            </div>
+            
+            {/* 상태 표시 영역 */}
+            <div className="status-indicator-group">
+                <div className="small-box available-box"></div>
+                <span>: Available</span>
+                <div className="small-box unavailable-box"></div>
+                <span>: Unavailable</span>
             </div>
 
 

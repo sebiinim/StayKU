@@ -99,10 +99,10 @@
 
 /* 입력 항목 제목 스타일 */
 .form-section label {
-    color: #000;      /* 검정색으로 수정 */
-    font-size: 18px;  /* 글자 크기 조금 확대 */
-    margin: 3px 0;    /* 위아래 간격 추가 */
-    font-weight: bold; /* 두껍게 표시 */
+    color: #000;      
+    font-size: 18px;  
+    margin: 3px 0;   
+    font-weight: bold; 
 }
 
 .form-input {
@@ -192,4 +192,40 @@
     display: flex;
     justify-content: center;  /* 버튼들을 중앙 정렬 */
     gap: 10px;                /* 버튼 사이 간격 */
+}
+
+/* 상태 표시 그룹 */
+.status-indicator-group {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+    margin-right: 20px;
+}
+
+/* 작은 박스 */
+.small-box {
+    width: 15px;
+    height: 15px;
+    border-radius: 3px;
+    margin-right: -10px;
+    display: inline-block;
+}
+
+/* Available 상태 작은 박스 */
+.available-box {
+    background-color: #4CAF50;
+}
+
+/* Unavailable 상태 작은 박스 */
+.unavailable-box {
+    background-color: #888;
+}
+
+/* 상태 텍스트 */
+.status-indicator-group span {
+    color: black;
+    font-size: 14px;
+    margin-left: 1px;
 }
