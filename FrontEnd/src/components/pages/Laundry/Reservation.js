@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Reservation.css';
 
 function Reservation() {
@@ -6,6 +7,8 @@ function Reservation() {
     const [selectedTime, setSelectedTime] = useState('');
     const [selectedMachine, setSelectedMachine] = useState('');
     const [reservations, setReservations] = useState([]);
+
+    const navigate = useNavigate();
 
     const handleReservation = () => {
         if (!selectedDate || !selectedTime || !selectedMachine) {
@@ -21,16 +24,55 @@ function Reservation() {
         alert('예약이 완료되었습니다.');
     };
 
+    const goToDashBoard = () => {
+        navigate('/dashboard');
+    };
+    const goToReservation = () => {
+        navigate('/laundry/reservation');
+    };
+
     return (
         <div className="reservation-container">
             {/* 상단 헤더 */}
-            <header className="reservation-header">
-                <h1>StayKU</h1>
-                <nav className="reservation-navbar">
-                    <span>Board</span>
-                    <span>Laundry</span>
-                    <span>About Dormitory</span>
-                    <span>Help</span>
+            <header className="top_left">
+                <div className="logo" onClick={goToDashBoard} style={{ cursor: "pointer" }}>
+                    StayKU
+                </div>
+                <nav className="navbar">
+                    <ul className="menu">
+                        <li className="menu-item">
+                            Board
+                            <ul className="submenu">
+                                <li>Community</li>
+                                <li>Matching Roommates</li>
+                                <li>Categories</li>
+                            </ul>
+                        </li>
+                        <li className="menu-item">
+                            Laundry
+                            <ul className="submenu">
+                                <li onClick={goToReservation}>Reservation</li>
+                                <li>Current Situation</li>
+                                <li>Help</li>
+                            </ul>
+                        </li>
+                        <li className="menu-item">
+                            About Dormitory
+                            <ul className="submenu">
+                                <li>News</li>
+                                <li>Facilities</li>
+                                <li>Event</li>
+                            </ul>
+                        </li>
+                        <li className="menu-item">
+                            Help
+                            <ul className="submenu">
+                                <li>Email</li>
+                                <li>Phone</li>
+                                <li>Location</li>
+                            </ul>
+                        </li>
+                    </ul>
                 </nav>
             </header>
 
