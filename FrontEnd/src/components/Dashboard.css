@@ -125,7 +125,86 @@ body {
 .section h2 {
   margin-bottom: 8px;
   font-size: 20px;
+}/* 고정된 상단 메뉴바 */
+.top_left {
+  background-color: #282c34;
+  color: white;
+  width: 100%;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+  font-size: 28px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
+
+.logo {
+  font-size: 40px;
+  font-weight: bold;
+  margin-right: 50px;
+  cursor: pointer;
+}
+
+.navbar {
+  margin-top: 0;
+}
+
+.menu {
+  display: flex;
+  gap: 30px;
+  list-style-type: none;
+}
+
+.menu-item {
+  position: relative;
+  padding: 8px 15px;
+  background-color: transparent;
+  color: white;
+  cursor: pointer;
+  font-size: 20px;
+  transition: all 0.3s ease;
+}
+
+.menu-item:hover {
+  color: white;
+}
+
+.submenu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #333;
+  list-style-type: none;
+  padding: 10px 0;
+  min-width: 150px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  z-index: 1001;
+}
+
+.submenu li {
+  padding: 8px 20px;
+  color: white;
+  transition: background-color 0.2s;
+}
+
+.submenu li:hover {
+  background-color: #555;
+}
+
+.menu-item:hover .submenu {
+  display: block;
+}
+
+.menu-item:hover .submenu li:hover {
+  background-color: #666;
+}
+
 
 .section p {
   font-size: 16px;
