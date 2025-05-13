@@ -9,9 +9,9 @@ from server.db.get_connection import get_connection
 router = APIRouter()
 
 
-# ------------------ 1. 세탁기 전체 현황 보기 ------------------
-@router.get("/status", tags=["washer"], summary="세탁기 전체 현황 보기")
-def washer_status():
+# ------------------ 1. 세탁기 한 개 현황 보기 ------------------
+@router.get("/status/{washer_id}", tags=["washer"], summary="세탁기 한 개 현황 보기")
+def washer_status(washer_id: int):
     try:
         conn = get_connection()
         cur = conn.cursor(dictionary=True)
@@ -26,14 +26,14 @@ def washer_status():
         )
         conn.commit()
 
-        cur.execute("SELECT * FROM washers")
-        data = cur.fetchall()
+        cur.execute("SELECT * FROM washers WHERE id = %s", (washer_id,))
+        data = cur.fetchone()
 
         if data:
             return data
         else:
             raise HTTPException(
-                status_code=500, detail=f"세탁기 전체 현황 조회 실패, data={data}"
+                status_code=500, detail=f"세탁기 한 개 현황 조회 실패, data={data}"
             )
 
     except Error as e:
