@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS roommate_profiles (
     is_smoker BOOLEAN,
     snore_level INT,
     hygiene_level INT,
-    hall_type ENUM('신관', '구관'),
+    hall_type ENUM('old_man', 'old_woman', 'new_man', 'new_woman'),
     PRIMARY KEY(user_id),
     FOREIGN KEY(user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
@@ -87,7 +87,10 @@ CREATE TABLE IF NOT EXISTS roommate_team_members (
 -- 8. 태그
 CREATE TABLE IF NOT EXISTS user_tags (
     user_id VARCHAR(100),
-    tag VARCHAR(100),
+    is_morning_person VARCHAR(30),
+    is_smoker VARCHAR(30),
+    snore_level VARCHAR(30),
+    hygiene_level VARCHAR(30,)
     PRIMARY KEY(user_id, tag),
     FOREIGN KEY(user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );

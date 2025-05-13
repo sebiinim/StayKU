@@ -2,10 +2,10 @@
 # ------------------ 요청 모델 ------------------
 import os
 
-from fastapi import HTTPException, APIRouter
+from fastapi import APIRouter, HTTPException
+from mysql.connector import Error
 from pydantic import BaseModel
 from server.db.get_connection import get_connection
-from mysql.connector import Error
 
 router = APIRouter()
 
