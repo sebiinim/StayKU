@@ -65,7 +65,7 @@ function News() {
                             Laundry
                             <ul className="submenu">
                                 <li onClick={goToReservation}>Reservation</li>
-                                <li onClick={{goToLaundry_help}}>Help</li>
+                                <li onClick={goToLaundry_help}>Help</li>
                             </ul>
                         </li>
                         <li className="menu-item">
