@@ -1,9 +1,9 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import "./Laundry_help.css";
+import "./LaundryHelp.css";
 
 
-function Laundry_help() {
+function LaundryHelp() {
     const navigate = useNavigate();
 
     const goToDashboard = () => {
@@ -19,7 +19,7 @@ function Laundry_help() {
     };
 
     const goToLaundry_help = () => {
-    navigate('/laundry_help'); 
+    navigate('/LaundryHelp'); 
     };
 
     const goToEvents = () => {
@@ -46,7 +46,7 @@ function Laundry_help() {
     navigate('/Categories');
     };
     return (
-        <div className="Laundry_help">
+        <div className="LaundryHelp">
             {/* 상단 메뉴바 */}
             <header className="top_left">
                 <div className="logo" onClick={goToDashboard} style={{ cursor: "pointer" }}>
@@ -123,4 +123,4 @@ function Laundry_help() {
 
     )
 }
-export default Laundry_help;
+export default LaundryHelp;

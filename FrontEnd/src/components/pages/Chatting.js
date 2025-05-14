@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 
-function Facilities() {
+function Chatting() {
     const navigate = useNavigate();
 
     const goToDashboard = () => {
@@ -29,23 +29,23 @@ function Facilities() {
     navigate('/information');  
     };
 
-    const goToMatchingRoommates = () => {
-        navigate('/MatchingRoommates'); 
+    const goToFacilities = () => {
+        navigate('/Facilities'); 
     };
 
     const goToNews = () => {
     navigate('/News'); 
     };
 
-    const goToFacilities = () => {
-        navigate('/Facilities'); 
+    const goToChatting = () => {
+        navigate('/Chatting'); 
     };
 
     const goToCategories = () => {
     navigate('/Categories');
     };
     return (
-        <div className="Facilities">
+        <div className="Chatting">
             {/* 상단 메뉴바 */}
             <header className="top_left">
                 <div className="logo" onClick={goToDashboard} style={{ cursor: "pointer" }}>
@@ -57,7 +57,7 @@ function Facilities() {
                             Board
                             <ul className="submenu">
                                 <li onClick={goToCommunity}>Community</li>
-                                <li onClick={goToMatchingRoommates}>Matching Roommates</li>
+                                <li onClick={goToChatting}>Chatting</li>
                                 <li onClick={goToCategories}>Categories</li>
                             </ul>
                         </li>
@@ -89,4 +89,4 @@ function Facilities() {
 
     )
 }
-export default Facilities;
+export default Chatting;

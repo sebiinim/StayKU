@@ -18,7 +18,7 @@ function Information() {
     };
 
     const goToLaundry_help = () => {
-    navigate('/laundry_help'); 
+    navigate('/LaundryHelp'); 
     };
 
     const goToEvents = () => {
