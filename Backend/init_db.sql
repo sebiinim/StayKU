@@ -94,3 +94,13 @@ CREATE TABLE IF NOT EXISTS user_tags (
     PRIMARY KEY(user_id, tag),
     FOREIGN KEY(user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
+
+-- 9. 룸메 등록
+CREATE TABLE IF NOT EXISTS roommate_connections (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id VARCHAR(100) NOT NULL,
+    partner_id VARCHAR(100) NOT NULL,
+    status ENUM('confirmed', 'pending') DEFAULT 'pending',
+    hall_type ENUM('신관', '구관') NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
