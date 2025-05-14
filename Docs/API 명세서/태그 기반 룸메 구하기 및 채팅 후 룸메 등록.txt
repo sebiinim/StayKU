@@ -1,0 +1,145 @@
+🌐 API 명세서: 태그 기반 룸메 구하기 및 1:1 채팅 후 룸메 등록
+목적:
+태그 기반으로 룸메를 찾고, 1:1 채팅을 통해 대화를 나눈 후 룸메로 등록하는 시스템 구축
+
+🗂️ 기본 정보
+- 백엔드 프레임워크: FastAPI
+- 데이터베이스: MySQL
+- 응답 형식: JSON
+- Base URL: http://localhost:8000
+- 인증: 필요 시, JWT 또는 세션 토큰 사용 (현재 미구현)
+
+📝 API 목록
+번호	API 설명	        HTTP Method	 경로
+1	태그 기반 룸메 추천	     GET	      /match/tag?user_id={user_id}
+2	태그 기반 1:1 채팅 시작	 POST	      /chat/tag
+3	1:1 채팅 로그 조회	    GET	          /chat/{from_user}/{to_user}
+4	룸메이트로 등록	         POST	      /team/connect
+5	룸메이트 연결 조회	     GET	      /team/connected/{user_id}
+
+📌 1. 태그 기반 룸메 추천
+- 설명: 태그를 기반으로 룸메이트 후보를 추천합니다.
+- 메서드: GET
+- URL:/match/tag?user_id={user_id}
+- 요청 파라미터:
+이름	 유형    설명
+user_id	String 	태그를 가진 사용자 ID
+
+응답 예시:
+json
+[
+  {
+    "user_id": "user2",
+    "is_morning_person": true,
+    "is_smoker": false,
+    "snore_level": 2,
+    "hygiene_level": 4,
+    "hall_type": "신관",
+    "common_tag_count": 5,
+    "common_tags": ["#아침형", "#비흡연", "#깔끔한편"],
+    "all_tags": ["#아침형", "#비흡연", "#깔끔한편", "#운동"]
+  }
+]
+- 응답 코드:
+200 OK: 추천 성공
+400 Bad Request: 필수 정보 누락
+500 Internal Server Error: 서버 오류
+
+💬 2. 태그 기반 1:1 채팅 시작
+- 설명: 추천된 룸메 후보와 채팅을 시작합니다.
+- 메서드: POST
+- URL: /chat/tag
+- 요청 데이터:
+이름	     유형	 설명
+user_id	    String	채팅을 시작하는 사용자 ID
+partner_id	String	채팅 대상 사용자 ID
+message	    String	첫 번째 메시지 내용
+- 요청 예시:
+json
+{
+  "user_id": "user1",
+  "partner_id": "user2",
+  "message": "안녕하세요!"
+}
+- 응답 예시:
+json
+{
+  "status": "채팅 전송 성공"
+}
+- 응답 코드:
+200 OK: 채팅 시작 성공
+400 Bad Request: 필수 정보 누락
+500 Internal Server Error: 서버 오류
+
+📄 3. 1:1 채팅 로그 조회
+- 설명: 특정 사용자의 채팅 기록을 조회합니다.
+- 메서드: GET
+- URL: /chat/{from_user}/{to_user}
+- 경로 변수:
+이름	     유형	필수 여부	설명
+from_user   String	필수	채팅을 보낸 사용자 ID
+to_user	    String	필수	채팅을 받은 사용자 ID
+
+- 응답 예시:
+json
+[
+  {
+    "from_user": "user1",
+    "to_user": "user2",
+    "message": "안녕하세요!",
+    "sent_at": "2025-05-13T15:30:00"
+  }
+]
+- 응답 코드:
+200 OK: 채팅 로그 조회 성공
+404 Not Found: 채팅 기록 없음
+500 Internal Server Error: 서버 오류
+
+🔗 4. 룸메이트로 등록
+- 설명: 1:1 채팅 후 룸메이트로 확정하여 연결합니다.
+- 메서드: POST
+- URL: /team/connect
+- 요청 데이터:
+이름	     유형	필수 여부	설명
+user_id	    String	필수	 연결을 요청하는 사용자 ID
+partner_id	String	필수	 연결될 상대방 사용자 ID
+hall_type	String	필수	 신관 또는 구관 구분
+
+- 요청 예시:
+json
+{
+  "user_id": "user1",
+  "partner_id": "user2",
+  "hall_type": "신관"
+}
+- 응답 예시:
+json
+{
+  "status": "룸메이트로 연결 완료"
+}
+- 응답 코드:
+200 OK: 룸메이트 등록 성공
+400 Bad Request: 필수 정보 누락
+500 Internal Server Error: 서버 오류
+
+📝 5. 룸메이트 연결 조회
+- 설명: 특정 사용자가 룸메이트로 등록된 상대를 조회합니다.
+- 메서드: GET
+- URL: /team/connected/{user_id}
+- 경로 변수:
+이름	 유형	 필수 여부	설명
+user_id	String	필수	  사용자 ID
+- 응답 예시:
+json
+[
+  {
+    "partner_id": "user2",
+    "status": "confirmed",
+    "hall_type": "신관",
+    "created_at": "2025-05-13T15:30:00"
+  }
+]
+- 응답 코드:
+200 OK: 룸메이트 조회 성공
+404 Not Found: 룸메이트 정보 없음
+500 Internal Server Error: 서버 오류
