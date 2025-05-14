@@ -1,19 +1,19 @@
-from contextlib import asynccontextmanager
-from fastapi import FastAPI, HTTPException, Depends
-from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
-import mysql.connector
-from mysql.connector import Error
 import os
-from dotenv import load_dotenv
-import openai
-from pathlib import Path
+from contextlib import asynccontextmanager
 from datetime import datetime, timedelta
-from apscheduler.schedulers.background import BackgroundScheduler
-from server.scheduler.tasks import washer_scheduler
+from pathlib import Path
 
+import mysql.connector
+import openai
+from apscheduler.schedulers.background import BackgroundScheduler
+from dotenv import load_dotenv
+from fastapi import Depends, FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
+from mysql.connector import Error
+from pydantic import BaseModel
 from server.db.get_connection import get_connection
 from server.middleware.cors_middleware import cors_middleware
+from server.scheduler.tasks import washer_scheduler
 
 # ------------------ 스케줄러 -----------------
 scheduler = BackgroundScheduler()
@@ -50,6 +50,10 @@ app.include_router(washer_router, prefix="/washer")
 from server.router.gpt import gpt_router
 
 app.include_router(gpt_router, prefix="/gpt")
+
+from server.router.roommate import roommate_router
+
+app.include_router(roommate_router, prefix="/roommate")
 
 
 # ------------------ 기본 라우트 ------------------

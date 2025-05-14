@@ -1,6 +1,7 @@
-import mysql.connector
 import os
 from pathlib import Path
+
+import mysql.connector
 from dotenv import load_dotenv
 
 env_path = Path(__file__).resolve().parent / ".env"
