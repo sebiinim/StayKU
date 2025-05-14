@@ -1,0 +1,85 @@
+/* 전체 페이지 중앙 정렬 */
+.landry_help-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 110vh;
+    background-color: #282c34;
+    color: #ffffff;
+}
+
+/* 안내 텍스트 박스 스타일 */
+.landry_help-info-box {
+    background-color: #f4f4f4;
+    color: #333;
+    width: 60%;
+    padding: 20px 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    font-family: Arial, sans-serif;
+    line-height: 1.3;
+}
+
+/* 제목 스타일 */
+.landry_help-info-box h2 {
+    font-size: 1.8em;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+/* 문단 제목 스타일 (문단과 제목 사이 간격 줄이기) */
+.landry_help-info-box p strong {
+    display: block;
+    margin-bottom: 10px; /* 제목과 본문 간 간격 */
+}
+
+/* 문단 간격과 들여쓰기 */
+.landry_help-info-box p {
+    margin: 15px 0; /* 일반 문단 간 간격 */
+    text-indent: 0px;
+    text-align: justify;
+}
+
+/* 각 항목의 강조 텍스트 */
+.landry_help-info-box strong {
+    font-weight: bold;
+    color: black;
+    font-size: 23px;
+}
+
+/* 상태 설명 색상 강조 */
+.landry_help-status-green {
+    color: #28a745;
+    font-weight: bold;
+}
+
+.landry_help-status-gray {
+    color: #6c757d;
+    font-weight: bold;
+}
+
+/* 유의사항과 고객지원 섹션 강조 */
+.landry_help-alert, .landry_help-support {
+    margin-top: 15px;
+    font-weight: bold;
+    color: #d9534f;
+}
+
+/* 중간 정렬 텍스트 */
+.landry_help-info-box .center {
+    text-align: center;
+    margin: 12px 0;
+}
+
+/* 줄바꿈 처리 */
+.landry_help-info-box p, .landry_help-info-box ul {
+    word-wrap: break-word;
+    white-space: pre-wrap;
+}
+
+/* 목록 스타일 */
+.landry_help-info-box ul {
+    margin: 8px 0;
+    padding-left: 20px;
+    list-style-type: disc;
+}
