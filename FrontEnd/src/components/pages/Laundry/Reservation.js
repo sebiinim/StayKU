@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { reserveMachine, fetchMachineStatus } from '../../../api/reservationApi';
 import './Reservation.css';
 
 function Reservation() {
@@ -10,46 +9,22 @@ function Reservation() {
     const [reservations, setReservations] = useState([]);
     const [isPopupOpen, setIsPopupOpen] = useState(false);
     const [currentMachine, setCurrentMachine] = useState(null);
-    const [machineStatus, setMachineStatus] = useState([]);
 
     const navigate = useNavigate();
 
-    // 세탁기 상태 불러오기
-    useEffect(() => {
-        const loadMachineStatus = async () => {
-            try {
-                const data = await fetchMachineStatus();
-                setMachineStatus(data);
-            } catch (error) {
-                alert(error.message);
-            }
-        };
-        loadMachineStatus();
-    }, []);
-
-    const handleReservation = async () => {
+    const handleReservation = () => {
         if (!selectedDate || !selectedTime) {
             alert('날짜와 시간을 모두 입력하세요.');
             return;
         }
-        try {
-            const machineType = currentMachine.startsWith('W') ? 'washer' : 'dryer';
-            const machineId = parseInt(currentMachine.substring(1));
-            const userId = 'test_user';  // 실제로는 로그인한 유저 ID 사용
-
-            await reserveMachine(machineType, machineId, userId);
-
-            const newReservation = {
-                machine: `${currentMachine}`,
-                date: selectedDate,
-                time: selectedTime,
-            };
-            setReservations([...reservations, newReservation]);
-            alert('예약이 완료되었습니다.');
-            setIsPopupOpen(false);  // 팝업 닫기
-        } catch (error) {
-            alert(error.message);
-        }
+        const newReservation = {
+            machine: `${currentMachine}`,
+            date: selectedDate,
+            time: selectedTime,
+        };
+        setReservations([...reservations, newReservation]);
+        alert('예약이 완료되었습니다.');
+        setIsPopupOpen(false);  // 팝업 닫기
     };
 
     const openPopup = (machineType, machineNumber) => {
@@ -63,52 +38,18 @@ function Reservation() {
         setIsPopupOpen(false);
     };
 
-
-    const goToDashboard = () => {
+    const goToDashBoard = () => {
         navigate('/dashboard');
     };
-
-    const goToCommunity = () => {
-    navigate('/Community');
-    };
-
     const goToReservation = () => {
-        navigate('/laundry/reservation');  
-    };
-
-    const goToLaundry_help = () => {
-    navigate('/LaundryHelp'); 
-    };
-
-    const goToEvents = () => {
-        navigate('/Events');  
-    };
-
-    const goToinformation = () => {
-    navigate('/information');  
-    };
-
-    const goToMatchingRoommates = () => {
-        navigate('/MatchingRoommates'); 
-    };
-
-    const goToNews = () => {
-    navigate('/News'); 
-    };
-
-    const goToFacilities = () => {
-        navigate('/Facilities'); 
-    };
-
-    const goToCategories = () => {
-    navigate('/Categories');
+        navigate('/laundry/reservation');
     };
 
     return (
         <div className="reservation-container">
             {/* 상단 헤더 */}
             <header className="top_left">
-                <div className="logo" onClick={goToDashboard} style={{ cursor: "pointer" }}>
+                <div className="logo" onClick={goToDashBoard} style={{ cursor: "pointer" }}>
                     StayKU
                 </div>
                 <nav className="navbar">
@@ -116,31 +57,33 @@ function Reservation() {
                         <li className="menu-item">
                             Board
                             <ul className="submenu">
-                                <li onClick={goToCommunity}>Community</li>
-                                <li onClick={goToMatchingRoommates}>Matching Roommates</li>
-                                <li onClick={goToCategories}>Categories</li>
+                                <li>Community</li>
+                                <li>Matching Roommates</li>
+                                <li>Categories</li>
                             </ul>
                         </li>
                         <li className="menu-item">
                             Laundry
                             <ul className="submenu">
                                 <li onClick={goToReservation}>Reservation</li>
-                                <li onClick={goToLaundry_help}>Help</li>
+                                <li>Current Situation</li>
+                                <li>Help</li>
                             </ul>
                         </li>
                         <li className="menu-item">
                             About Dormitory
                             <ul className="submenu">
-                                <li onClick={goToNews}>News</li>
-                                <li onClick={goToFacilities}>Facilities</li>
-                                <li onClick={goToEvents}>Event</li>
+                                <li>News</li>
+                                <li>Facilities</li>
+                                <li>Event</li>
                             </ul>
                         </li>
                         <li className="menu-item">
                             Help
                             <ul className="submenu">
-                                <li onClick={goToinformation}>information</li>
-
+                                <li>Email</li>
+                                <li>Phone</li>
+                                <li>Location</li>
                             </ul>
                         </li>
                     </ul>
