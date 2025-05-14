@@ -63,18 +63,52 @@ function Reservation() {
         setIsPopupOpen(false);
     };
 
-    const goToDashBoard = () => {
+
+    const goToDashboard = () => {
         navigate('/dashboard');
     };
+
+    const goToCommunity = () => {
+    navigate('/Community');
+    };
+
     const goToReservation = () => {
-        navigate('/laundry/reservation');
+        navigate('/laundry/reservation');  
+    };
+
+    const goToLaundry_help = () => {
+    navigate('/laundry_help'); 
+    };
+
+    const goToEvents = () => {
+        navigate('/Events');  
+    };
+
+    const goToinformation = () => {
+    navigate('/information');  
+    };
+
+    const goToMatchingRoommates = () => {
+        navigate('/MatchingRoommates'); 
+    };
+
+    const goToNews = () => {
+    navigate('/News'); 
+    };
+
+    const goToFacilities = () => {
+        navigate('/Facilities'); 
+    };
+
+    const goToCategories = () => {
+    navigate('/Categories');
     };
 
     return (
         <div className="reservation-container">
             {/* 상단 헤더 */}
             <header className="top_left">
-                <div className="logo" onClick={goToDashBoard} style={{ cursor: "pointer" }}>
+                <div className="logo" onClick={goToDashboard} style={{ cursor: "pointer" }}>
                     StayKU
                 </div>
                 <nav className="navbar">
@@ -82,33 +116,31 @@ function Reservation() {
                         <li className="menu-item">
                             Board
                             <ul className="submenu">
-                                <li>Community</li>
-                                <li>Matching Roommates</li>
-                                <li>Categories</li>
+                                <li onClick={goToCommunity}>Community</li>
+                                <li onClick={goToMatchingRoommates}>Matching Roommates</li>
+                                <li onClick={goToCategories}>Categories</li>
                             </ul>
                         </li>
                         <li className="menu-item">
                             Laundry
                             <ul className="submenu">
                                 <li onClick={goToReservation}>Reservation</li>
-                                <li>Current Situation</li>
-                                <li>Help</li>
+                                <li onClick={goToLaundry_help}>Help</li>
                             </ul>
                         </li>
                         <li className="menu-item">
                             About Dormitory
                             <ul className="submenu">
-                                <li>News</li>
-                                <li>Facilities</li>
-                                <li>Event</li>
+                                <li onClick={goToNews}>News</li>
+                                <li onClick={goToFacilities}>Facilities</li>
+                                <li onClick={goToEvents}>Event</li>
                             </ul>
                         </li>
                         <li className="menu-item">
                             Help
                             <ul className="submenu">
-                                <li>Email</li>
-                                <li>Phone</li>
-                                <li>Location</li>
+                                <li onClick={goToinformation}>information</li>
+
                             </ul>
                         </li>
                     </ul>

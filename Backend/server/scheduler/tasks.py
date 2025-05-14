@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
-from server.db.get_connection import get_connection
+
 from mysql.connector import Error
+from server.db.get_connection import get_connection
 
 
 # 시간이 된 예약을 시작하고 DB에서 삭제
