@@ -11,6 +11,7 @@ function Reservation() {
     const [isPopupOpen, setIsPopupOpen] = useState(false);
     const [currentMachine, setCurrentMachine] = useState(null);
     const [machineStatus, setMachineStatus] = useState([]);
+    const [userId] = useState(localStorage.getItem('user_id'));
 
     const navigate = useNavigate();
 
@@ -19,8 +20,10 @@ function Reservation() {
         const loadMachineStatus = async () => {
             try {
                 const data = await fetchMachineStatus();
+                console.log("상태 조회 성공:", data);  // 상태 조회 성공 시 로그
                 setMachineStatus(data);
             } catch (error) {
+                console.error("상태 조회 실패:", error.message);  // 상태 조회 실패 시 로그
                 alert(error.message);
             }
         };
@@ -35,10 +38,11 @@ function Reservation() {
         try {
             const machineType = currentMachine.startsWith('W') ? 'washer' : 'dryer';
             const machineId = parseInt(currentMachine.substring(1));
-            const userId = 'test_user';  // 실제로는 로그인한 유저 ID 사용
-
-            await reserveMachine(machineType, machineId, userId);
-
+            const userId = localStorage.getItem('user_id');  // 로그인한 유저 ID 사용
+            const reservationTime = new Date(`${selectedDate}T${selectedTime}`).toISOString();
+    
+            await reserveMachine(userId, machineId, reservationTime);
+    
             const newReservation = {
                 machine: `${currentMachine}`,
                 date: selectedDate,
@@ -51,6 +55,11 @@ function Reservation() {
             alert(error.message);
         }
     };
+    
+    // 상태 클래스 동적 할당 함수
+    const machineStatusClass = (machine) => 
+        machine.status === 'available' ? 'available' : 'in-use';
+
 
     const openPopup = (machineType, machineNumber) => {
         const machineLabel = `${machineType} ${machineNumber}`;
