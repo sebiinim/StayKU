@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { reserveMachine, fetchMachineStatus } from '../../../api/reservationApi';
 import './Reservation.css';
 
 function Reservation() {
@@ -9,22 +10,46 @@ function Reservation() {
     const [reservations, setReservations] = useState([]);
     const [isPopupOpen, setIsPopupOpen] = useState(false);
     const [currentMachine, setCurrentMachine] = useState(null);
+    const [machineStatus, setMachineStatus] = useState([]);
 
     const navigate = useNavigate();
 
-    const handleReservation = () => {
+    // 세탁기 상태 불러오기
+    useEffect(() => {
+        const loadMachineStatus = async () => {
+            try {
+                const data = await fetchMachineStatus();
+                setMachineStatus(data);
+            } catch (error) {
+                alert(error.message);
+            }
+        };
+        loadMachineStatus();
+    }, []);
+
+    const handleReservation = async () => {
         if (!selectedDate || !selectedTime) {
             alert('날짜와 시간을 모두 입력하세요.');
             return;
         }
-        const newReservation = {
-            machine: `${currentMachine}`,
-            date: selectedDate,
-            time: selectedTime,
-        };
-        setReservations([...reservations, newReservation]);
-        alert('예약이 완료되었습니다.');
-        setIsPopupOpen(false);  // 팝업 닫기
+        try {
+            const machineType = currentMachine.startsWith('W') ? 'washer' : 'dryer';
+            const machineId = parseInt(currentMachine.substring(1));
+            const userId = 'test_user';  // 실제로는 로그인한 유저 ID 사용
+
+            await reserveMachine(machineType, machineId, userId);
+
+            const newReservation = {
+                machine: `${currentMachine}`,
+                date: selectedDate,
+                time: selectedTime,
+            };
+            setReservations([...reservations, newReservation]);
+            alert('예약이 완료되었습니다.');
+            setIsPopupOpen(false);  // 팝업 닫기
+        } catch (error) {
+            alert(error.message);
+        }
     };
 
     const openPopup = (machineType, machineNumber) => {
