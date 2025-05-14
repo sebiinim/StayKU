@@ -37,7 +37,37 @@ function Reservation() {
     const closePopup = () => {
         setIsPopupOpen(false);
     };
+    const goToChatting = () => {
+        navigate('/Chatting');
+    };
 
+    const goToLaundry_help = () => {
+    navigate('/LaundryHelp'); 
+    };
+
+    const goToEvents = () => {
+        navigate('/Events');  
+    };
+
+    const goToinformation = () => {
+    navigate('/information');  
+    };
+
+    const goToFacilities = () => {
+        navigate('/Facilities'); 
+    };
+
+    const goToNews = () => {
+    navigate('/News'); 
+    };
+
+    const goToMatchingRoommates = () => {
+        navigate('/MatchingRoommates'); 
+    };
+
+    const goToRoommateRegistration = () => {
+    navigate('/RoommateRegistration');
+    };
     const goToDashBoard = () => {
         navigate('/dashboard');
     };
@@ -57,33 +87,30 @@ function Reservation() {
                         <li className="menu-item">
                             Board
                             <ul className="submenu">
-                                <li>Chatting</li>
-                                <li>Matching Roommates</li>
-                                <li>Roommate Registration</li>
+                                <li onClick={goToChatting}>Chatting</li>
+                                <li onClick={goToMatchingRoommates}>Matching Roommates</li>
+                                <li onClick={goToRoommateRegistration}>Roommate Registration</li>
                             </ul>
                         </li>
                         <li className="menu-item">
                             Laundry
                             <ul className="submenu">
                                 <li onClick={goToReservation}>Reservation</li>
-                                <li>Current Situation</li>
-                                <li>Help</li>
+                                <li onClick={goToLaundry_help}>Help</li>
                             </ul>
                         </li>
                         <li className="menu-item">
                             About Dormitory
                             <ul className="submenu">
-                                <li>News</li>
-                                <li>Facilities</li>
-                                <li>Event</li>
+                                <li onClick={goToNews}>News</li>
+                                <li onClick={goToFacilities}>Facilities</li>
+                                <li onClick={goToEvents}>Event</li>
                             </ul>
                         </li>
                         <li className="menu-item">
                             Help
                             <ul className="submenu">
-                                <li>Email</li>
-                                <li>Phone</li>
-                                <li>Location</li>
+                                <li onClick={goToinformation}>information</li>
                             </ul>
                         </li>
                     </ul>
