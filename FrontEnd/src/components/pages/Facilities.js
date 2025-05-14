@@ -9,8 +9,8 @@ function Facilities() {
         navigate('/dashboard');
     };
 
-    const goToCommunity = () => {
-    navigate('/Community');
+    const goToChatting = () => {
+    navigate('/Chatting');
     };
 
     const goToReservation = () => {
@@ -41,8 +41,8 @@ function Facilities() {
         navigate('/Facilities'); 
     };
 
-    const goToCategories = () => {
-    navigate('/Categories');
+    const goToRoommateRegistration = () => {
+    navigate('/RoommateRegistration');
     };
     return (
         <div className="Facilities">
@@ -56,9 +56,9 @@ function Facilities() {
                         <li className="menu-item">
                             Board
                             <ul className="submenu">
-                                <li onClick={goToCommunity}>Community</li>
+                                <li onClick={goToChatting}>Chatting</li>
                                 <li onClick={goToMatchingRoommates}>Matching Roommates</li>
-                                <li onClick={goToCategories}>Categories</li>
+                                <li onClick={goToRoommateRegistration}>Roommate Registration</li>
                             </ul>
                         </li>
                         <li className="menu-item">

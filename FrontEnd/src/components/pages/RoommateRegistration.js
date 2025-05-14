@@ -2,15 +2,15 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 
-function Community() {
+function RoommateRegistration() {
     const navigate = useNavigate();
 
     const goToDashboard = () => {
         navigate('/dashboard');
     };
 
-    const goToCommunity = () => {
-    navigate('/Community');
+    const goToChatting = () => {
+    navigate('/Chatting');
     };
 
     const goToReservation = () => {
@@ -29,23 +29,23 @@ function Community() {
     navigate('/information');  
     };
 
-    const goToMatchingRoommates = () => {
-        navigate('/MatchingRoommates'); 
+    const goToFacilities = () => {
+        navigate('/Facilities'); 
     };
 
     const goToNews = () => {
     navigate('/News'); 
     };
 
-    const goToFacilities = () => {
-        navigate('/Facilities'); 
+    const goToMatchingRoommates = () => {
+        navigate('/MatchingRoommates'); 
     };
 
-    const goToCategories = () => {
-    navigate('/Categories');
+    const goToRoommateRegistration = () => {
+    navigate('/RoommateRegistration');
     };
     return (
-        <div className="Community">
+        <div className="RoommateRegistration">
             {/* 상단 메뉴바 */}
             <header className="top_left">
                 <div className="logo" onClick={goToDashboard} style={{ cursor: "pointer" }}>
@@ -56,9 +56,9 @@ function Community() {
                         <li className="menu-item">
                             Board
                             <ul className="submenu">
-                                <li onClick={goToCommunity}>Community</li>
+                                <li onClick={goToChatting}>Chatting</li>
                                 <li onClick={goToMatchingRoommates}>Matching Roommates</li>
-                                <li onClick={goToCategories}>Categories</li>
+                                <li onClick={goToRoommateRegistration}>Roommate Registration</li>
                             </ul>
                         </li>
                         <li className="menu-item">
@@ -89,4 +89,4 @@ function Community() {
 
     )
 }
-export default Community;
+export default RoommateRegistration;

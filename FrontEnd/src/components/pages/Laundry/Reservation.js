@@ -57,9 +57,9 @@ function Reservation() {
                         <li className="menu-item">
                             Board
                             <ul className="submenu">
-                                <li>Community</li>
+                                <li>Chatting</li>
                                 <li>Matching Roommates</li>
-                                <li>Categories</li>
+                                <li>Roommate Registration</li>
                             </ul>
                         </li>
                         <li className="menu-item">

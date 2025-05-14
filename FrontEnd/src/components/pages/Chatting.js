@@ -9,8 +9,8 @@ function Chatting() {
         navigate('/dashboard');
     };
 
-    const goToCommunity = () => {
-    navigate('/Community');
+    const goToChatting = () => {
+    navigate('/Chatting');
     };
 
     const goToReservation = () => {
@@ -29,20 +29,20 @@ function Chatting() {
     navigate('/information');  
     };
 
-    const goToFacilities = () => {
-        navigate('/Facilities'); 
+    const goToMatchingRoommates = () => {
+        navigate('/MatchingRoommates'); 
     };
 
     const goToNews = () => {
     navigate('/News'); 
     };
 
-    const goToChatting = () => {
-        navigate('/Chatting'); 
+    const goToFacilities = () => {
+        navigate('/Facilities'); 
     };
 
-    const goToCategories = () => {
-    navigate('/Categories');
+    const goToRoommateRegistration = () => {
+    navigate('/RoommateRegistration');
     };
     return (
         <div className="Chatting">
@@ -56,9 +56,9 @@ function Chatting() {
                         <li className="menu-item">
                             Board
                             <ul className="submenu">
-                                <li onClick={goToCommunity}>Community</li>
                                 <li onClick={goToChatting}>Chatting</li>
-                                <li onClick={goToCategories}>Categories</li>
+                                <li onClick={goToMatchingRoommates}>Matching Roommates</li>
+                                <li onClick={goToRoommateRegistration}>Roommate Registration</li>
                             </ul>
                         </li>
                         <li className="menu-item">

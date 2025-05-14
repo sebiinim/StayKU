@@ -10,8 +10,8 @@ import Information from './pages/information';
 import MatchingRoommates from './pages/MatchingRoommates';
 import News from './pages/News';
 import Facilities from './pages/Facilities';
-import Categories from './pages/Categories';
-import Community from './pages/Community';
+import RoommateRegistration from './pages/RoommateRegistration';
+import Chatting from './pages/Chatting';
 
 function Routing() {
   return (
@@ -28,8 +28,8 @@ function Routing() {
         <Route path="/News" element={<News />} />
         <Route path="/Facilities" element={<Facilities />} />
         <Route path="/LaundryHelp" element={<LaundryHelp />} />
-        <Route path="/Categories" element={<Categories />} />
-        <Route path="/Community" element={<Community />} />
+        <Route path="/RoommateRegistration" element={<RoommateRegistration />} />
+        <Route path="/Chatting" element={<Chatting />} />
       </Routes>
     </Router>
   );

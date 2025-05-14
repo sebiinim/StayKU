@@ -31,8 +31,8 @@ function Dashboard() {
         navigate('/dashboard');
     };
 
-    const goToCommunity = () => {
-    navigate('/Community');
+    const goToChatting = () => {
+    navigate('/Chatting');
     };
 
     const goToReservation = () => {
@@ -63,8 +63,8 @@ function Dashboard() {
         navigate('/MatchingRoommates'); 
     };
 
-    const goToCategories = () => {
-    navigate('/Categories');
+    const goToRoommateRegistration = () => {
+    navigate('/RoommateRegistration');
     };
     return (
         <div className="Dashboard">
@@ -78,9 +78,9 @@ function Dashboard() {
                         <li className="menu-item">
                             Board
                             <ul className="submenu">
-                                <li onClick={goToCommunity}>Community</li>
+                                <li onClick={goToChatting}>Chatting</li>
                                 <li onClick={goToMatchingRoommates}>Matching Roommates</li>
-                                <li onClick={goToCategories}>Categories</li>
+                                <li onClick={goToRoommateRegistration}>Roommate Registration</li>
                             </ul>
                         </li>
                         <li className="menu-item">
@@ -112,9 +112,9 @@ function Dashboard() {
             <div className="content">
                 <div className="section" id="board">
                     <h2>Board</h2>
-                    <p>Community</p>
+                    <p>Chatting</p>
                     <p>Matching Roommates</p>
-                    <p>Categories</p>
+                    <p>RoommateRegistration</p>
                 </div>
                 <div className="section" id="laundry">
                     <h2>Laundry</h2>
