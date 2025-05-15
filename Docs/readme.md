@@ -77,7 +77,7 @@
 # Laundry & Roommate Management App
 
 Flask + MySQL + OpenAI API + Android Studio 초기 프로젝트
-Render로 백엔드 서버 배포, TiDB로 Mysql cloud 사용.
+Vercel로 프론트엔드 클라이언트, Render로 백엔드 서버 배포, TiDB로 Mysql cloud 사용.
 
 ---
 

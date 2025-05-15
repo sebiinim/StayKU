@@ -101,7 +101,7 @@ function Dashboard() {
                         <li className="menu-item">
                             Help
                             <ul className="submenu">
-                                <li onClick={goToinformation}>information</li>
+                                <li onClick={goToinformation}>Information</li>
                             </ul>
                         </li>
                     </ul>
@@ -114,12 +114,11 @@ function Dashboard() {
                     <h2>Board</h2>
                     <p>Chatting</p>
                     <p>Matching Roommates</p>
-                    <p>RoommateRegistration</p>
+                    <p>Roommate Registration</p>
                 </div>
                 <div className="section" id="laundry">
                     <h2>Laundry</h2>
                     <p>Reservation</p>
-                    <p>Current Situation</p>
                     <p>Help</p>
                 </div>
                 <div className="section" id="about-dormitory">
@@ -130,9 +129,7 @@ function Dashboard() {
                 </div>
                 <div className="section" id="help">
                     <h2>Help</h2>
-                    <p>Email</p>
-                    <p>Phone</p>
-                    <p>Location</p>
+                    <p>Information</p>
                 </div>
             </div>
         </div>
