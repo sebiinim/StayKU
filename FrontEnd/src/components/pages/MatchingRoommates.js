@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState , useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './MatchingRoommates.css';
 
 function MatchingRoommates() {
     const navigate = useNavigate();
-    const [isMorningPerson, setIsMorningPerson] = useState(false);
-    const [isSmoker, setIsSmoker] = useState(false);
+    const [isMorningPerson, setIsMorningPerson] = useState(true);
+    const [isSmoker, setIsSmoker] = useState(true);
     const [snoreLevel, setSnoreLevel] = useState(3);
     const [hygieneLevel, setHygieneLevel] = useState(3);
     const [hallType, setHallType] = useState('신관');
@@ -23,13 +23,6 @@ function MatchingRoommates() {
     const goToRoommateRegistration = () => navigate('/RoommateRegistration');
     const goToReservation = () => navigate('/laundry/reservation');
 
-    // 매칭 시작 함수
-    const handleStartMatching = () => {
-        alert('룸메이트 매칭을 시작합니다.');
-        updateCategories();
-    };
-
-
     // 코골이 정도 해시태그 변환
     const getSnoreLevelTag = (level) => {
         if (level <= 2) return '#코골이_적음';
@@ -44,16 +37,43 @@ function MatchingRoommates() {
         return '#위생_높음';
     };
 
+
+    // 슬라이더 값 변경 시 채우기 업데이트
+    const updateSliderFill = (e) => {
+        const value = e.target.value;
+        const max = e.target.max;
+        const percent = ((value - 1) / max) * 120;
+        e.target.style.setProperty('--percent', `${percent}%`);
+    };
+
+
+    useEffect(() => {
+        const snoreSlider = document.getElementById("snore-slider");
+        const hygieneSlider = document.getElementById("hygiene-slider");
+        updateSliderFill({ target: snoreSlider });
+        updateSliderFill({ target: hygieneSlider });
+    }, []);
+    
+
+
     // 선택한 카테고리 업데이트 함수
     const updateCategories = () => {
         const categories = [];
-        categories.push(isMorningPerson ? '#아침형' : '#야행성');
+        categories.push(isMorningPerson ? '#아침형' : '#저녁형');
         categories.push(isSmoker ? '#흡연' : '#비흡연');
         categories.push(getSnoreLevelTag(snoreLevel));  // 변환 함수 사용
         categories.push(getHygieneLevelTag(hygieneLevel));  // 변환 함수 사용
         categories.push(`#기숙사_${hallType}`);
         setSelectedCategories(categories);
     };
+
+    // 프로필 저장 준비 함수
+    const handleSaveProfile = () => {
+        updateCategories();
+        alert('프로필이 저장되었습니다.');
+        // 여기에 API 연결 준비 (추후 axios.post로 프로필 저장)
+    };
+
     return (
         <div className="matching-roommates-container">
             {/* 상단 헤더 */}
@@ -103,7 +123,7 @@ function MatchingRoommates() {
 
                 {/* 토글 버튼 그룹 */}
                 <div className="category-item">
-                    <label>주행성 (ON) / 야행성 (OFF)</label>
+                    <label>아침형 (ON) / 저녁형 (OFF)</label>
                     <div className="toggle-button">
                         <label className="toggle-switch">
                             <input type="checkbox" checked={isMorningPerson} onChange={() => setIsMorningPerson(!isMorningPerson)} />
@@ -113,7 +133,7 @@ function MatchingRoommates() {
                 </div>
 
                 <div className="category-item">
-                    <label>비흡연 (ON) / 흡연 (OFF)</label>
+                    <label>흡연 (ON) / 비흡연 (OFF)</label>
                     <div className="toggle-button">
                         <label className="toggle-switch">
                             <input type="checkbox" checked={isSmoker} onChange={() => setIsSmoker(!isSmoker)} />
@@ -127,21 +147,29 @@ function MatchingRoommates() {
                     <label>코골이 수준: {snoreLevel}</label>
                     <input 
                         type="range" 
+                        id="snore-slider"
                         min="1" 
                         max="5" 
                         value={snoreLevel} 
-                        onChange={(e) => setSnoreLevel(Number(e.target.value))} 
+                        onChange={(e) => {
+                            setSnoreLevel(Number(e.target.value));
+                            updateSliderFill(e);
+                        }} 
                     />
                 </div>
-
+                    
                 <div className="slider-item">
                     <label>위생 수준: {hygieneLevel}</label>
                     <input 
                         type="range" 
+                        id="hygiene-slider"
                         min="1" 
                         max="5" 
                         value={hygieneLevel} 
-                        onChange={(e) => setHygieneLevel(Number(e.target.value))} 
+                        onChange={(e) => {
+                            setHygieneLevel(Number(e.target.value));
+                            updateSliderFill(e);
+                        }} 
                     />
                 </div>
 
@@ -154,8 +182,8 @@ function MatchingRoommates() {
                     </select>
                 </div>
 
-                <button className="submit-button" onClick={handleStartMatching}>
-                    Start Matching
+                <button className="submit-button" onClick={handleSaveProfile}>
+                    Save Profile
                 </button>
 
                 {/* 선택한 카테고리 표시 */}
