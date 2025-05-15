@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { fetchMachineStatus, reserveMachine } from '../../../api/reservation';
 import './Reservation.css';
 
 function Reservation() {
@@ -7,73 +8,90 @@ function Reservation() {
     const [selectedTime, setSelectedTime] = useState('');
     const [selectedMachine, setSelectedMachine] = useState('');
     const [reservations, setReservations] = useState([]);
+    const [machineStatus, setMachineStatus] = useState({});
     const [isPopupOpen, setIsPopupOpen] = useState(false);
     const [currentMachine, setCurrentMachine] = useState(null);
-
+    const [machineType, setMachineType] = useState('');
+    const [userId, setUserId] = useState('');  // 사용자 ID
     const navigate = useNavigate();
 
-    const handleReservation = () => {
+    // 로그인한 사용자 ID 가져오기 (예시)
+    useEffect(() => {
+        const storedUserId = localStorage.getItem('user_id');
+        if (storedUserId) {
+            setUserId(storedUserId);
+        } else {
+            alert('로그인이 필요합니다.');
+            navigate('/login');  // 로그인 페이지로 이동
+        }
+    }, [navigate]);
+
+    const openPopup = (machineType, machineNumber) => {
+        const machineLabel = `${machineType} ${machineNumber}`;
+        if (machineStatus[machineLabel] === 'in_use') {
+            alert('이미 사용 중인 기기입니다.');
+            return;
+        }
+        setCurrentMachine(machineLabel);
+        setSelectedMachine(machineLabel);
+        setMachineType(machineType.toLowerCase());
+        setIsPopupOpen(true);
+    };
+
+    const closePopup = () => setIsPopupOpen(false);
+
+    const navigateTo = (path) => navigate(path);
+    const goToChatting = () => navigateTo('/Chatting');
+    const goToLaundry_help = () => navigateTo('/LaundryHelp');
+    const goToEvents = () => navigateTo('/Events');
+    const goToinformation = () => navigateTo('/information');
+    const goToFacilities = () => navigateTo('/Facilities');
+    const goToNews = () => navigateTo('/News');
+    const goToMatchingRoommates = () => navigateTo('/MatchingRoommates');
+    const goToRoommateRegistration = () => navigateTo('/RoommateRegistration');
+    const goToDashBoard = () => navigateTo('/dashboard');
+    const goToReservation = () => navigateTo('/laundry/reservation');
+
+    // 예약 상태 불러오기
+    useEffect(() => {
+        const loadStatus = async () => {
+            try {
+                const data = await fetchMachineStatus();
+                const statusMap = {};
+                data.forEach(item => {
+                    const type = item.type === 'washer' ? 'Washer' : 'Dryer';
+                    statusMap[`${type} ${item.id}`] = item.status;
+                });
+                setMachineStatus(statusMap);
+            } catch (error) {
+                alert('기기 상태를 불러오는 데 실패했습니다.');
+            }
+        };
+        loadStatus();
+    }, []);
+
+    const handleReservation = async () => {
         if (!selectedDate || !selectedTime) {
             alert('날짜와 시간을 모두 입력하세요.');
             return;
         }
-        const newReservation = {
-            machine: `${currentMachine}`,
-            date: selectedDate,
-            time: selectedTime,
-        };
-        setReservations([...reservations, newReservation]);
-        alert('예약이 완료되었습니다.');
-        setIsPopupOpen(false);  // 팝업 닫기
+
+        try {
+            await reserveMachine(machineType, currentMachine);
+            alert('예약이 완료되었습니다.');
+            setReservations([...reservations, { machine: currentMachine, date: selectedDate, time: selectedTime }]);
+            setIsPopupOpen(false);
+            setMachineStatus(prevStatus => ({
+                ...prevStatus,
+                [currentMachine]: 'in_use'
+            }));
+        } catch (error) {
+            alert(error.message || '예약에 실패했습니다.');
+        }
     };
 
-    const openPopup = (machineType, machineNumber) => {
-        const machineLabel = `${machineType} ${machineNumber}`;
-        setCurrentMachine(machineLabel);
-        setSelectedMachine(machineLabel);
-        setIsPopupOpen(true);
-    };
 
-    const closePopup = () => {
-        setIsPopupOpen(false);
-    };
-    const goToChatting = () => {
-        navigate('/Chatting');
-    };
 
-    const goToLaundry_help = () => {
-    navigate('/LaundryHelp'); 
-    };
-
-    const goToEvents = () => {
-        navigate('/Events');  
-    };
-
-    const goToinformation = () => {
-    navigate('/information');  
-    };
-
-    const goToFacilities = () => {
-        navigate('/Facilities'); 
-    };
-
-    const goToNews = () => {
-    navigate('/News'); 
-    };
-
-    const goToMatchingRoommates = () => {
-        navigate('/MatchingRoommates'); 
-    };
-
-    const goToRoommateRegistration = () => {
-    navigate('/RoommateRegistration');
-    };
-    const goToDashBoard = () => {
-        navigate('/dashboard');
-    };
-    const goToReservation = () => {
-        navigate('/laundry/reservation');
-    };
 
     return (
         <div className="reservation-container">
@@ -121,16 +139,20 @@ function Reservation() {
             <div className="status-section">
                 <h2>Select Washers</h2>
                 <div className="machine-status">
-                    {[...Array(8)].map((_, index) => (
-                        <div 
-                            key={`W${index + 1}`} 
-                            className={`machine ${index === 1 ? 'in-use' : 'available'}`} 
-                            onClick={() => openPopup('Washer', index + 1)}
-                            style={{ cursor: "pointer" }}
-                        >
-                            W{index + 1}
-                        </div>
-                    ))}
+                    {[...Array(8)].map((_, index) => {
+                        const machineLabel = `Washer ${index + 1}`;
+                        const isUnavailable = machineStatus[machineLabel] === 'in_use';
+                        return (
+                            <div 
+                                key={machineLabel} 
+                                className={`machine ${isUnavailable ? 'unavailable' : 'available'}`} 
+                                onClick={() => openPopup('Washer', index + 1)}
+                                style={{ cursor: isUnavailable ? 'not-allowed' : 'pointer' }}
+                            >
+                                W{index + 1}
+                            </div>
+                        );
+                    })}
                 </div>
             </div>
 
@@ -138,16 +160,20 @@ function Reservation() {
             <div className="status-section">
                 <h2>Select Dryers</h2>
                 <div className="machine-status">
-                    {[...Array(8)].map((_, index) => (
-                        <div 
-                            key={`D${index + 1}`} 
-                            className={`machine ${index === 3 ? 'in-use' : 'available'}`} 
-                            onClick={() => openPopup('Dryer', index + 1)}
-                            style={{ cursor: "pointer", position: "relative" }}  // 위치 지정
-                        >
-                            D{index + 1}
-                        </div>
-                    ))}
+                    {[...Array(8)].map((_, index) => {
+                        const machineLabel = `Dryer ${index + 1}`;
+                        const isUnavailable = machineStatus[machineLabel] === 'in_use';
+                        return (
+                            <div 
+                                key={machineLabel} 
+                                className={`machine ${isUnavailable ? 'unavailable' : 'available'}`} 
+                                onClick={() => openPopup('Dryer', index + 1)}
+                                style={{ cursor: isUnavailable ? 'not-allowed' : 'pointer' }}
+                            >
+                                D{index + 1}
+                            </div>
+                        );
+                    })}
                 </div>
             </div>
             
