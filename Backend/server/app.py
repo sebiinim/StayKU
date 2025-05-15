@@ -57,5 +57,4 @@ app.include_router(roommate_router, prefix="/roommate")
 # ------------------ 기본 라우트 ------------------
 @app.get("/")
 def home():
-    print(os.getenv("MYSQL_HOST"))
-    return "Hello from Flask!"
+    return "Hello from StayKU!"
