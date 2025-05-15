@@ -18,11 +18,28 @@ function Chatting() {
     const goToMatchingRoommates = () => navigate('/MatchingRoommates');
     const goToRoommateRegistration = () => navigate('/RoommateRegistration');
 
+    // 상태 관리
     const [users, setUsers] = useState([]);
+    const [partners, setPartners] = useState([]);
     const [selectedUser, setSelectedUser] = useState(null);
     const [message, setMessage] = useState('');
+    const [chatHistory, setChatHistory] = useState([]);
     const currentUser = localStorage.getItem('user_id');
 
+    // 이전에 채팅했던 상대 목록 불러오기
+    useEffect(() => {
+        const loadChatPartners = async () => {
+            try {
+                const result = await fetchChatPartners(currentUser);
+                setPartners(result || []);
+            } catch (error) {
+                alert(`Error loading chat partners: ${error.message}`);
+            }
+        };
+        loadChatPartners();
+    }, [currentUser]);
+
+    // 전체 유저 목록 불러오기
     useEffect(() => {
         const loadUserList = async () => {
             try {
@@ -35,6 +52,29 @@ function Chatting() {
         };
         loadUserList();
     }, []);
+
+    // 채팅 내역 불러오기
+    const loadChatHistory = async (partnerId) => {
+        try {
+            const result = await fetchChatHistory(currentUser, partnerId);
+            setChatHistory(result);
+            setSelectedUser(partnerId);
+        } catch (error) {
+            alert(`Error loading chat history: ${error.message}`);
+        }
+    };
+
+    // 메시지 전송
+    const sendMessage = async () => {
+        if (!message.trim()) return;
+        try {
+            await saveChatMessage(currentUser, selectedUser.id, message);
+            setMessage('');
+            loadChatHistory(selectedUser.id);
+        } catch (error) {
+            alert(`Error sending message: ${error.message}`);
+        }
+    };
 
     return (
         <div className="Chatting-container">
@@ -74,49 +114,51 @@ function Chatting() {
                 </nav>
             </header>
 
-            {/* 채팅 레이아웃 */}
-            <div className="Chatting-layout">
-            <h1>Chatting</h1>
-                {/* 유저 목록 */}
-                <div className="Chatting-user-list">
-                    <h3>전체 유저 목록</h3>
-                    <ul>
-                        {users.length === 0 ? (
-                            <li>No users available</li>
-                        ) : (
-                            users.map((user, index) => (
-                                <li key={index} onClick={() => setSelectedUser(user)}>
-                                    {user.id} - {user.name}
-                                </li>
-                            ))
-                        )}
-                    </ul>
-                </div>
-
-                {/* 채팅 창 */}
-                {selectedUser && (
-                    <div className="Chatting-chat-box">
-                        <h4>Chat with {selectedUser.name}</h4>
-                        <div className="Chatting-chat-history">
-                            <p>태그 목록:</p>
-                            <ul>
-                                <li>아침형 인간: {selectedUser.is_morning_person}</li>
-                                <li>흡연 여부: {selectedUser.is_smoking}</li>
-                                <li>코골이 정도: {selectedUser.snore_level}</li>
-                                <li>청결도: {selectedUser.hygiene_level}</li>
-                            </ul>
-                            <input
-                                type="text"
-                                value={message}
-                                onChange={(e) => setMessage(e.target.value)}
-                                placeholder="Enter your message"
-                                className="Chatting-input"
-                            />
-                            <button className="Chatting-send-button">Send</button>
-                        </div>
-                    </div>
-                )}
+            {/* 유저 목록 */}
+            <div className="Chatting-user-list">
+                <h3>전체 유저 목록</h3>
+                <ul>
+                    {users.map((user, index) => (
+                        <li key={index} onClick={() => setSelectedUser(user)}>
+                            {user.id} - {user.name}
+                        </li>
+                    ))}
+                </ul>
             </div>
+
+            {/* 채팅 상대 목록 */}
+            <div className="Chatting-partner-list">
+                <h3>채팅 상대 목록</h3>
+                <ul>
+                    {partners.map((partner, index) => (
+                        <li key={index} onClick={() => loadChatHistory(partner)}>
+                            {partner}
+                        </li>
+                    ))}
+                </ul>
+            </div>
+
+            {/* 채팅 창 */}
+            {selectedUser && (
+                <div className="Chatting-chat-box">
+                    <h4>Chat with {selectedUser.name}</h4>
+                    <div className="Chatting-chat-history">
+                        {chatHistory.map((chat, index) => (
+                            <p key={index}>
+                                <strong>{chat.from_user}:</strong> {chat.message}
+                            </p>
+                        ))}
+                    </div>
+                    <input
+                        type="text"
+                        value={message}
+                        onChange={(e) => setMessage(e.target.value)}
+                        placeholder="Enter your message"
+                        className="Chatting-input"
+                    />
+                    <button onClick={sendMessage} className="Chatting-send-button">Send</button>
+                </div>
+            )}
         </div>
     );
 }

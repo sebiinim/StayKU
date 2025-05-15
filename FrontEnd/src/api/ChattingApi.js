@@ -1,4 +1,11 @@
-import axiosInstance from './axiosInstance';
+import axios from 'axios';
+
+const axiosInstance = axios.create({
+    baseURL: 'https://stayku.orender.com',  // 서버의 기본 주소 설정
+    headers: {
+        'Content-Type': 'application/json',
+    },
+});
 
 // 채팅 저장 API 호출
 export const saveChatMessage = async (fromUser, toUser, message) => {
@@ -27,9 +34,19 @@ export const fetchChatHistory = async (user1, user2) => {
 // 나와 채팅했던 상대 조회 API 호출
 export const fetchChatPartners = async (userId) => {
     try {
-        const response = await axiosInstance.get(`/roommate/chat_partners/${userId}`);
+        const response = await axiosInstance.get(`/roommate/chat-partners/${userId}`);
         return response.data;
     } catch (error) {
         throw new Error(error.response?.data?.detail || '채팅 상대 조회 실패');
+    }
+};
+
+// 전체 유저 목록과 태그 조회 API 호출
+export const fetchUserProfilesWithTags = async () => {
+    try {
+        const response = await axiosInstance.get('/roommate/profile-tag-all');
+        return response.data;
+    } catch (error) {
+        throw new Error(error.response?.data?.detail || '전체 유저 목록 조회 실패');
     }
 };
