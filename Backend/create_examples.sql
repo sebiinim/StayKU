@@ -19,6 +19,12 @@ INSERT INTO reservations (washer_id, washer_type, user_id, reserved_at, expire_a
 (4, NULL, 'yeon',      DATE_ADD(NOW(), INTERVAL 45 MINUTE), DATE_ADD(NOW(), INTERVAL 90 MINUTE)),
 (5, NULL, 'ghkd',      DATE_ADD(NOW(), INTERVAL 0 MINUTE),  DATE_ADD(NOW(), INTERVAL 45 MINUTE));
 
+INSERT INTO d_reservations (dryer_id, dryer_type, user_id, reserved_at, expire_at) VALUES
+(1, NULL, 'sebin',     DATE_ADD(NOW(), INTERVAL 12 MINUTE), DATE_ADD(NOW(), INTERVAL 57 MINUTE)),
+(2, NULL, 'hyeon',     DATE_ADD(NOW(), INTERVAL 25 MINUTE), DATE_ADD(NOW(), INTERVAL 70 MINUTE)),
+(3, NULL, 'jun',       DATE_ADD(NOW(), INTERVAL 7 MINUTE),  DATE_ADD(NOW(), INTERVAL 52 MINUTE)),
+(4, NULL, 'yeon',      DATE_ADD(NOW(), INTERVAL 45 MINUTE), DATE_ADD(NOW(), INTERVAL 90 MINUTE)),
+(5, NULL, 'ghkd',      DATE_ADD(NOW(), INTERVAL 0 MINUTE),  DATE_ADD(NOW(), INTERVAL 45 MINUTE));
 -- roommate_profiles
 INSERT INTO roommate_profiles (user_id, is_morning_person, is_smoker, snore_level, hygiene_level, hall_type) VALUES
 ('sebin', TRUE, TRUE, 1, 5, 'new_woman'),

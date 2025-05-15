@@ -5,13 +5,13 @@ import './MatchingRoommates.css';
 
 function MatchingRoommates() {
     const navigate = useNavigate();
-    const [userId, setUserId] = useState('');  // user_id 상태 추가
     const [isMorningPerson, setIsMorningPerson] = useState(true);
     const [isSmoker, setIsSmoker] = useState(true);
     const [snoreLevel, setSnoreLevel] = useState(3);
     const [hygieneLevel, setHygieneLevel] = useState(3);
-    const [hallType, setHallType] = useState('신관');
+    const [hallType, setHallType] = useState('new_man');
     const [selectedCategories, setSelectedCategories] = useState([]);
+    const user_id = localStorage.getItem('user_id');
 
     // 페이지 이동 함수
     const goToDashBoard = () => navigate('/dashboard');
@@ -25,19 +25,19 @@ function MatchingRoommates() {
     const goToRoommateRegistration = () => navigate('/RoommateRegistration');
     const goToReservation = () => navigate('/laundry/reservation');
 
-    // 코골이 정도 해시태그 변환
-    const getSnoreLevelTag = (level) => {
-        if (level <= 2) return '#코골이_적음';
-        if (level === 3) return '#코골이_보통';
-        return '#코골이_많음';
-    };
+    // // 코골이 정도 해시태그 변환
+    // const getSnoreLevelTag = (level) => {
+    //     if (level <= 2) return '코골이 적음';
+    //     if (level === 3) return '코골이 보통';
+    //     return '#코골이_많음';
+    // };
 
-    // 청결 정도 해시태그 변환
-    const getHygieneLevelTag = (level) => {
-        if (level <= 2) return '#위생_낮음';
-        if (level === 3) return '#위생_보통';
-        return '#위생_높음';
-    };
+    // // 청결 정도 해시태그 변환
+    // const getHygieneLevelTag = (level) => {
+    //     if (level <= 2) return '#위생_낮음';
+    //     if (level === 3) return '#위생_보통';
+    //     return '#위생_높음';
+    // };
 
 
     // 슬라이더 값 변경 시 채우기 업데이트
@@ -58,58 +58,58 @@ function MatchingRoommates() {
     
 
 
-    // 선택한 카테고리 업데이트 함수
-    const updateCategories = () => {
-        const categories = [];
-        categories.push(isMorningPerson ? '#아침형' : '#저녁형');
-        categories.push(isSmoker ? '#흡연' : '#비흡연');
-        categories.push(getSnoreLevelTag(snoreLevel));  // 변환 함수 사용
-        categories.push(getHygieneLevelTag(hygieneLevel));  // 변환 함수 사용
-        categories.push(`#기숙사_${hallType}`);
-        setSelectedCategories(categories);
-    };
+    // // 선택한 카테고리 업데이트 함수
+    // const updateCategories = () => {
+    //     const categories = [];
+    //     categories.push(isMorningPerson ? '#아침형' : '#저녁형');
+    //     categories.push(isSmoker ? '#흡연' : '#비흡연');
+    //     categories.push(snoreLevel);  // 변환 함수 사용
+    //     categories.push(hygieneLevel);  // 변환 함수 사용
+    //     categories.push(hallType);
+    //     setSelectedCategories(categories);
+    // };
 
 
-    useEffect(() => {
-        // ✅ API로 user_id 가져오기
-        const fetchUserId = async () => {
-            try {
-                const response = await getProfile();
-                setUserId(response.user_id);  // user_id를 상태로 저장
-            } catch (error) {
-                console.error("유저 ID 불러오기 오류:", error);
-            }
-        };
-        fetchUserId();
-    }, []);
+    // useEffect(() => {
+    //     // ✅ API로 user_id 가져오기
+    //     const fetchUserId = async () => {
+    //         try {
+    //             const response = await getProfile();
+    //             setUserId(response.user_id);  // user_id를 상태로 저장
+    //         } catch (error) {
+    //             console.error("유저 ID 불러오기 오류:", error);
+    //         }
+    //     };
+    //     fetchUserId();
+    // }, []);
 
 
-    // 사용자 ID 불러오기 함수
-    const fetchUserId = () => {
-        try {
-            // 로컬 스토리지에서 유저 정보 가져오기
-            const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+    // // 사용자 ID 불러오기 함수
+    // const fetchUserId = () => {
+    //     try {
+    //         // 로컬 스토리지에서 유저 정보 가져오기
+    //         const userInfo = JSON.parse(localStorage.getItem('userInfo'));
 
-            if (!userInfo || !userInfo.user_id) {
-                throw new Error('로그인 정보가 없습니다.');
-            }
+    //         if (!userInfo || !userInfo.user_id) {
+    //             throw new Error('로그인 정보가 없습니다.');
+    //         }
 
-            return userInfo.user_id;
-        } catch (error) {
-            console.error('유저 ID 불러오기 오류:', error.message);
-            alert('로그인 정보가 없습니다. 로그인을 먼저 해주세요.');
-            navigate('/login');  // 로그인 페이지로 이동
-            return null;
-        }
-    };
+    //         return userInfo.user_id;
+    //     } catch (error) {
+    //         console.error('유저 ID 불러오기 오류:', error.message);
+    //         alert('로그인 정보가 없습니다. 로그인을 먼저 해주세요.');
+    //         navigate('/login');  // 로그인 페이지로 이동
+    //         return null;
+    //     }
+    // };
 
 
-    // 프로필 저장 준비 함수
+    // 프로필 저장 호출 함수
     const handleSaveProfile = async () => {
-        updateCategories();
+        // updateCategories();
 
         const profileData = {
-            user_id: userId,  // 
+            user_id: user_id,  // 
             is_morning_person: isMorningPerson,
             is_smoker: isSmoker,
             snore_level: snoreLevel,

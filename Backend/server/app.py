@@ -41,6 +41,10 @@ from server.router.washer import washer_router
 
 app.include_router(washer_router, prefix="/washer")
 
+from server.router.dryer import dryer_router
+
+app.include_router(dryer_router, prefix="/dryer")
+
 from server.router.gpt import gpt_router
 
 app.include_router(gpt_router, prefix="/gpt")

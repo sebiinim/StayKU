@@ -13,6 +13,7 @@ DROP TABLE IF EXISTS roommate_connections;
 DROP TABLE IF EXISTS user_tags;
 DROP TABLE IF EXISTS reservations;
 DROP TABLE IF EXISTS washers;
+DROP TABLE IF EXISTS dryers;
 DROP TABLE IF EXISTS users;
 
 -- 1. 사용자 계정 테이블
@@ -45,11 +46,46 @@ VALUES
 ('available', NULL, NULL),
 ('available', NULL, NULL);
 
+
+
 -- 3. 세탁기 예약
 CREATE TABLE IF NOT EXISTS reservations (
     id INT AUTO_INCREMENT PRIMARY KEY,
     washer_id INT,
     washer_type VARCHAR(10),
+    user_id VARCHAR(100),
+    reserved_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    expire_at TIMESTAMP
+);
+
+-- 건조기 table
+CREATE TABLE IF NOT EXISTS dryers (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    status VARCHAR(10) NOT NULL,
+    user_id VARCHAR(100),
+    end_time DATETIME DEFAULT NULL,
+    remaining_time INT
+);
+
+-- 2-1. 건조기 10개 생성
+INSERT dryers (status, end_time, remaining_time)
+VALUES
+('available', NULL, NULL),
+('available', NULL, NULL),
+('available', NULL, NULL),
+('available', NULL, NULL),
+('available', NULL, NULL),
+('available', NULL, NULL),
+('available', NULL, NULL),
+('available', NULL, NULL),
+('available', NULL, NULL),
+('available', NULL, NULL);
+
+-- 3. 건조기 예약
+CREATE TABLE IF NOT EXISTS d_reservations (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    dryer_id INT,
+    dryer_type VARCHAR(10),
     user_id VARCHAR(100),
     reserved_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     expire_at TIMESTAMP
