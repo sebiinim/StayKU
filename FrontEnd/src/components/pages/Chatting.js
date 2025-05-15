@@ -43,7 +43,7 @@ function Chatting() {
     useEffect(() => {
         const loadUserList = async () => {
             try {
-                const response = await fetch('https://stayku.orender.com/roommate/profile-tag-all');
+                const response = await fetch('https://stayku.onrender.com/roommate/profile-tag-all');
                 const result = await response.json();
                 setUsers(result);
             } catch (error) {
@@ -68,9 +68,9 @@ function Chatting() {
     const sendMessage = async () => {
         if (!message.trim()) return;
         try {
-            await saveChatMessage(currentUser, selectedUser.id, message);
+            await saveChatMessage(currentUser, selectedUser.user_id, message);
             setMessage('');
-            loadChatHistory(selectedUser.id);
+            loadChatHistory(selectedUser.user_id);
         } catch (error) {
             alert(`Error sending message: ${error.message}`);
         }
@@ -117,10 +117,11 @@ function Chatting() {
             {/* 유저 목록 */}
             <div className="Chatting-user-list">
                 <h3>전체 유저 목록</h3>
+
                 <ul>
                     {users.map((user, index) => (
                         <li key={index} onClick={() => setSelectedUser(user)}>
-                            {user.id} - {user.name}
+                            {user.id} - {user.user_id}
                         </li>
                     ))}
                 </ul>
@@ -138,10 +139,12 @@ function Chatting() {
                 </ul>
             </div>
 
+
+
             {/* 채팅 창 */}
             {selectedUser && (
                 <div className="Chatting-chat-box">
-                    <h4>Chat with {selectedUser.name}</h4>
+                    <h4>Chat with {selectedUser.user_id}</h4>
                     <div className="Chatting-chat-history">
                         {chatHistory.map((chat, index) => (
                             <p key={index}>
