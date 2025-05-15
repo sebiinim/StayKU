@@ -1,9 +1,9 @@
-import os
-from datetime import datetime, timedelta
+from datetime import timedelta
 
 from fastapi import APIRouter, HTTPException
 from mysql.connector import Error
 from pydantic import BaseModel
+
 from server.db.get_connection import get_connection
 
 router = APIRouter()
@@ -13,6 +13,9 @@ router = APIRouter()
 class WasherUser(BaseModel):
     washer_id: int  # 세탁기 번호
     user_id: str  # 유저 이름
+
+    class Config:
+        json_schema_extra = {"example": {"washer_id": 1, "user_id": "sebin"}}
 
 
 @router.post("/reserve", tags=["washer"], summary="세탁기 예약")

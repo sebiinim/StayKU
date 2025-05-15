@@ -1,4 +1,5 @@
 from fastapi import APIRouter
+
 from server.api.auth.login import router as login
 from server.api.auth.register import router as register
 

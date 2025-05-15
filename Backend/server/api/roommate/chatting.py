@@ -1,8 +1,10 @@
-from fastapi import APIRouter, HTTPException, status, Path
+
+from fastapi import APIRouter, HTTPException, Path
 from fastapi.responses import JSONResponse
-from pydantic import BaseModel, Field
-from typing import List
-from server.db.get_connection import get_connection  # get_connection 함수 import 필요
+from pydantic import BaseModel
+
+from server.db.get_connection import \
+    get_connection  # get_connection 함수 import 필요
 
 router = APIRouter()
 
@@ -25,7 +27,7 @@ class ChatMessage(BaseModel):
 
 # ------------------ 1. 룸메이트 채팅 저장 (POST /chat) ------------------
 @router.post("/chat", tags=["roommate"], summary="룸메이트 채팅 저장(보내기)")
-def save_chat(data: ChatMessage):
+def post_chat(data: ChatMessage):
     try:
         conn = get_connection()
         cur = conn.cursor()
@@ -58,7 +60,9 @@ def save_chat(data: ChatMessage):
     tags=["roommate"],
     summary="룸메이트 채팅 내역 조회(양방향)",
 )
-def get_chat(user_1: str, user_2: str):
+def get_chat(
+    user_1: str = Path(..., example="sebin"), user_2: str = Path(..., example="ghkd")
+):
     try:
         conn = get_connection()
         cur = conn.cursor(dictionary=True)
@@ -79,7 +83,7 @@ def get_chat(user_1: str, user_2: str):
 
 # ------------------ 3. 나와 채팅했던 상대 내역 불러오기 (GET /chat/partners/{user_id}) ------------------
 @router.get(
-    "/chat_partners/{user_id}",
+    "/chat-partners/{user_id}",
     tags=["roommate"],
     summary="나와 채팅했던 상대 내역 불러오기",
 )

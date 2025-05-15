@@ -1,4 +1,6 @@
 -- 데이터베이스 생성
+DROP DATABASE IF EXISTS laundry_db;
+CREATE DATABASE IF NOT EXISTS laundry_db CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 USE laundry_db;
 
 -- 기존 테이블 제거 (자식 → 부모 순)
@@ -6,6 +8,7 @@ DROP TABLE IF EXISTS roommate_team_members;
 DROP TABLE IF EXISTS roommate_teams;
 DROP TABLE IF EXISTS roommate_chats;
 DROP TABLE IF EXISTS roommate_profiles;
+DROP TABLE IF EXISTS roommate_connections;
 DROP TABLE IF EXISTS user_tags;
 DROP TABLE IF EXISTS reservations;
 DROP TABLE IF EXISTS washers;
@@ -13,7 +16,8 @@ DROP TABLE IF EXISTS users;
 
 -- 1. 사용자 계정 테이블
 CREATE TABLE IF NOT EXISTS users (
-    user_id VARCHAR(100) PRIMARY KEY,
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id VARCHAR(100),
     password VARCHAR(100) NOT NULL
 );
 
@@ -21,6 +25,7 @@ CREATE TABLE IF NOT EXISTS users (
 CREATE TABLE IF NOT EXISTS washers (
     id INT AUTO_INCREMENT PRIMARY KEY,
     status VARCHAR(10) NOT NULL,
+    user_id VARCHAR(100),
     end_time DATETIME DEFAULT NULL,
     remaining_time INT
 );
@@ -51,14 +56,14 @@ CREATE TABLE IF NOT EXISTS reservations (
 
 -- 4. 룸메이트 프로필 (외래키 연결)
 CREATE TABLE IF NOT EXISTS roommate_profiles (
+    id INT AUTO_INCREMENT PRIMARY KEY,
     user_id VARCHAR(100),
     is_morning_person BOOLEAN,
     is_smoker BOOLEAN,
     snore_level INT,
     hygiene_level INT,
-    hall_type ENUM('old_man', 'old_woman', 'new_man', 'new_woman'),
-    PRIMARY KEY(user_id),
-    FOREIGN KEY(user_id) REFERENCES users(user_id) ON DELETE CASCADE
+    hall_type ENUM('old_man', 'old_woman', 'new_man', 'new_woman')
+    # FOREIGN KEY(user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
 -- 5. 채팅
@@ -68,7 +73,7 @@ CREATE TABLE IF NOT EXISTS roommate_chats (
     to_user VARCHAR(100),
     message TEXT,
     sent_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 
 -- 6. 룸메이트 팀
 CREATE TABLE IF NOT EXISTS roommate_teams (
@@ -78,22 +83,23 @@ CREATE TABLE IF NOT EXISTS roommate_teams (
 
 -- 7. 팀 구성원
 CREATE TABLE IF NOT EXISTS roommate_team_members (
+    id INT AUTO_INCREMENT PRIMARY KEY,
     team_id INT,
-    user_id VARCHAR(100),
-    PRIMARY KEY(team_id, user_id),
-    FOREIGN KEY(team_id) REFERENCES roommate_teams(team_id) ON DELETE CASCADE
+    hall_type ENUM('old_man', 'old_woman', 'new_man', 'new_woman'),
+    user_id VARCHAR(100)
+    # FOREIGN KEY(team_id) REFERENCES roommate_teams(team_id) ON DELETE CASCADE
 );
 
 -- 8. 태그
 CREATE TABLE IF NOT EXISTS user_tags (
+    id INT AUTO_INCREMENT PRIMARY KEY,
     user_id VARCHAR(100),
     is_morning_person VARCHAR(30),
     is_smoker VARCHAR(30),
     snore_level VARCHAR(30),
-    hygiene_level VARCHAR(30),
-    PRIMARY KEY(user_id),
-    FOREIGN KEY(user_id) REFERENCES users(user_id) ON DELETE CASCADE
-);
+    hygiene_level VARCHAR(30)
+    # FOREIGN KEY(user_id) REFERENCES users(user_id) ON DELETE CASCADE
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 
 -- 9. 룸메 등록
 CREATE TABLE IF NOT EXISTS roommate_connections (
@@ -101,6 +107,6 @@ CREATE TABLE IF NOT EXISTS roommate_connections (
     user_id VARCHAR(100) NOT NULL,
     partner_id VARCHAR(100) NOT NULL,
     status ENUM('confirmed', 'pending') DEFAULT 'pending',
-    hall_type ENUM('신관', '구관') NOT NULL,
+    hall_type ENUM('old_man', 'old_woman', 'new_man', 'new_woman') NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

@@ -1,9 +1,8 @@
-import os
 from datetime import datetime
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Path
 from mysql.connector import Error
-from pydantic import BaseModel
+
 from server.db.get_connection import get_connection
 
 router = APIRouter()
@@ -11,7 +10,7 @@ router = APIRouter()
 
 # ------------------ 1. 세탁기 한 개 현황 보기 ------------------
 @router.get("/status/{washer_id}", tags=["washer"], summary="세탁기 한 개 현황 보기")
-def washer_status(washer_id: int):
+def washer_status(washer_id: int = Path(..., example=1)):
     try:
         conn = get_connection()
         cur = conn.cursor(dictionary=True)

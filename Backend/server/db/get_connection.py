@@ -16,4 +16,5 @@ def get_connection():
         user=os.getenv("MYSQL_USER"),
         password=os.getenv("MYSQL_PASSWORD"),
         database=os.getenv("MYSQL_DB"),
+        charset="utf8mb4",
     )

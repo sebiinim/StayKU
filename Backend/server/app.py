@@ -1,17 +1,11 @@
 import os
 from contextlib import asynccontextmanager
-from datetime import datetime, timedelta
 from pathlib import Path
 
-import mysql.connector
-import openai
 from apscheduler.schedulers.background import BackgroundScheduler
 from dotenv import load_dotenv
-from fastapi import Depends, FastAPI, HTTPException
-from fastapi.middleware.cors import CORSMiddleware
-from mysql.connector import Error
-from pydantic import BaseModel
-from server.db.get_connection import get_connection
+from fastapi import FastAPI
+
 from server.middleware.cors_middleware import cors_middleware
 from server.scheduler.tasks import washer_scheduler
 

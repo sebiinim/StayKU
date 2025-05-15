@@ -1,15 +1,14 @@
-import os
 
 from fastapi import APIRouter, HTTPException
 from mysql.connector import Error
-from pydantic import BaseModel
+
 from server.db.get_connection import get_connection
 
 router = APIRouter()
 
 
 # ------------------ 1-1. 사용 가능 세탁기 현황 보기 ------------------
-@router.get("/status/available", tags=["washer"], summary="사용 가능 세탁기 현황 보기")
+@router.get("/status_available", tags=["washer"], summary="사용 가능 세탁기 현황 보기")
 def washer_status_available():
     try:
         conn = get_connection()

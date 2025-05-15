@@ -1,8 +1,8 @@
-import os
 
 from fastapi import APIRouter, HTTPException
 from mysql.connector import Error
 from pydantic import BaseModel
+
 from server.db.get_connection import get_connection
 
 router = APIRouter()
