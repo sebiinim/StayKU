@@ -1,5 +1,4 @@
 -- 데이터베이스 생성
-CREATE DATABASE IF NOT EXISTS laundry_db;
 USE laundry_db;
 
 -- 기존 테이블 제거 (자식 → 부모 순)
@@ -7,6 +6,7 @@ DROP TABLE IF EXISTS roommate_team_members;
 DROP TABLE IF EXISTS roommate_teams;
 DROP TABLE IF EXISTS roommate_chats;
 DROP TABLE IF EXISTS roommate_profiles;
+DROP TABLE IF EXISTS user_tags;
 DROP TABLE IF EXISTS reservations;
 DROP TABLE IF EXISTS washers;
 DROP TABLE IF EXISTS users;
@@ -90,8 +90,8 @@ CREATE TABLE IF NOT EXISTS user_tags (
     is_morning_person VARCHAR(30),
     is_smoker VARCHAR(30),
     snore_level VARCHAR(30),
-    hygiene_level VARCHAR(30,)
-    PRIMARY KEY(user_id, tag),
+    hygiene_level VARCHAR(30),
+    PRIMARY KEY(user_id),
     FOREIGN KEY(user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 

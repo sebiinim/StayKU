@@ -3,7 +3,7 @@ from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from typing import List, Optional
 import random
-from db.get_connection import get_connection
+from server.db.get_connection import get_connection
 
 router = APIRouter()
 
