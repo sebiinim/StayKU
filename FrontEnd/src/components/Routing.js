@@ -5,7 +5,7 @@ import SignupForm from './SignupForm';
 import { Home, Dashboard } from './Home';
 import Reservation from './pages/Laundry/Reservation';
 import LaundryHelp from './pages/LaundryHelp';
-import Events from './pages/Events';
+import Events from './pages/events';
 import Information from './pages/information';
 import MatchingRoommates from './pages/MatchingRoommates';
 import News from './pages/News';

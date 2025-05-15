@@ -3,6 +3,7 @@ DROP DATABASE IF EXISTS laundry_db;
 CREATE DATABASE IF NOT EXISTS laundry_db CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 USE laundry_db;
 
+SET NAMES utf8mb4;
 -- 기존 테이블 제거 (자식 → 부모 순)
 DROP TABLE IF EXISTS roommate_team_members;
 DROP TABLE IF EXISTS roommate_teams;
