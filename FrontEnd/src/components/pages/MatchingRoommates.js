@@ -84,11 +84,32 @@ function MatchingRoommates() {
     }, []);
 
 
+    // 사용자 ID 불러오기 함수
+    const fetchUserId = () => {
+        try {
+            // 로컬 스토리지에서 유저 정보 가져오기
+            const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+
+            if (!userInfo || !userInfo.user_id) {
+                throw new Error('로그인 정보가 없습니다.');
+            }
+
+            return userInfo.user_id;
+        } catch (error) {
+            console.error('유저 ID 불러오기 오류:', error.message);
+            alert('로그인 정보가 없습니다. 로그인을 먼저 해주세요.');
+            navigate('/login');  // 로그인 페이지로 이동
+            return null;
+        }
+    };
+
+
     // 프로필 저장 준비 함수
     const handleSaveProfile = async () => {
         updateCategories();
+
         const profileData = {
-            user_id: userId,  // 추후 로그인 상태와 연동
+            user_id: userId,  // 
             is_morning_person: isMorningPerson,
             is_smoker: isSmoker,
             snore_level: snoreLevel,
@@ -100,7 +121,8 @@ function MatchingRoommates() {
             await saveProfile(profileData);
             alert('프로필이 성공적으로 저장되었습니다.');
         } catch (error) {
-            alert('프로필 저장 중 오류가 발생했습니다.');
+            console.error('프로필 저장 중 오류:', error.response?.data || error.message);
+            alert(`프로필 저장 중 오류: ${error.response?.data?.detail || error.message}`);
         }
     };
 
@@ -207,8 +229,10 @@ function MatchingRoommates() {
                 <div className="dropdown-item">
                     <label>기숙사 선택</label>
                     <select value={hallType} onChange={(e) => setHallType(e.target.value)}>
-                        <option value="신관">신관 (2인)</option>
-                        <option value="구관">구관 (3인)</option>
+                        <option value="new_man">신관 (남)</option>
+                        <option value="new_woman">신관 (여)</option>
+                        <option value="old_man">구관 (남)</option>
+                        <option value="old_woman">구관 (여)</option>
                     </select>
                 </div>
 
