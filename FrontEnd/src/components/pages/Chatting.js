@@ -72,7 +72,8 @@ function Chatting() {
             setMessage('');
             loadChatHistory(selectedUser.user_id);
         } catch (error) {
-            alert(`Error sending message: ${error.message}`);
+            console.error(error)
+            alert(`Error sending message: ${error.response?.data?.detail || error.message || '알 수 없는 오류'}`);
         }
     };
 

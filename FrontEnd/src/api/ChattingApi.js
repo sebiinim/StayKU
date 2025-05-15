@@ -13,10 +13,12 @@ export const saveChatMessage = async (fromUser, toUser, message) => {
         const response = await axiosInstance.post('/roommate/chat', {
             from_user: fromUser,
             to_user: toUser,
-            message: message,
+            message: message
         });
+        console.log(typeof toUser, toUser);
         return response.data;
     } catch (error) {
+        console.error("🔥 Full error response:", error.response?.data);
         throw new Error(error.response?.data?.detail || '채팅 저장 실패');
     }
 };
