@@ -32,15 +32,14 @@
 /* 예약 메인 영역 */
 .reservation-container {
     padding: 20px;
-    margin: 100px auto 30px;  /* 상단 고정 메뉴 공간 확보 */
+    margin: 200px auto 30px;  /* 상단 고정 메뉴 공간 확보 */
     max-width: 800px;
-    text-align: center;
     background-color: #f0f0f0;
     border-radius: 8px;
 }
 
 .status-section {
-    margin: 10px 0;
+    margin: 50px 0;
     color: black
 }
 
