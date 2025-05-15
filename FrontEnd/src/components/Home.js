@@ -4,7 +4,7 @@ import SignupForm from './SignupForm';
 import { useNavigate } from 'react-router-dom';
 import "./Dashboard.css";  // 스타일 파일 연결
 import MatchingRoommates from './pages/MatchingRoommates';
-import Facilities from './pages/Facilities';
+import Facilities from './pages/Facilities_Student';
 
 function Home() {
     const navigate = useNavigate();

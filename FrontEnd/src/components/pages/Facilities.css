@@ -1,0 +1,90 @@
+.FacilitiesStudent {
+    background-color: #282c34;
+    color: white;
+    min-height: 100vh;
+    padding: 20px;
+    margin-top: 160px;
+}
+
+.facilities-title {
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+.tab-menu {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.tab-button {
+    background-color: #a58456;
+    color: white;
+    padding: 10px 20px;
+    margin: 5px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.tab-button:hover {
+    background-color: #8a6b4a;
+}
+
+.tab-button.active {
+    background-color: #7a5c3d;
+}
+
+.table-section {
+    margin: 20px auto;
+    max-width: 800px;
+}
+
+.info-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.info-table th, .info-table td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: left;
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+.info-table th {
+    background-color: #e0e0e0;
+    font-weight: bold;
+}
+
+.info-table tr:hover {
+    background-color: #f0f0f0;
+}
+
+.content-container {
+    margin-top: 80px; /* 본문과 상단 메뉴 간 추가 여백 */
+}
+
+.facilities-container {
+    padding-top: 80px; /* 콘텐츠 상단 간격 추가 */
+    margin-top: 20px;
+}
+
+/* 이전 버튼 스타일 */
+.back-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #a58456;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.back-button:hover {
+    background-color: #8a6b4a;
+}
