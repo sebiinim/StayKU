@@ -10,7 +10,7 @@ function MatchingRoommates() {
     const [isSmoker, setIsSmoker] = useState(true);
     const [snoreLevel, setSnoreLevel] = useState(3);
     const [hygieneLevel, setHygieneLevel] = useState(3);
-    const [hallType, setHallType] = useState('신관');
+    const [hallType, setHallType] = useState('new_man');
     const [selectedCategories, setSelectedCategories] = useState([]);
 
     // 페이지 이동 함수
