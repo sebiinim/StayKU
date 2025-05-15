@@ -1,9 +1,11 @@
 import React, { useState , useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { saveProfile, getProfile } from '../../api/MatchingRoommatesApi';
 import './MatchingRoommates.css';
 
 function MatchingRoommates() {
     const navigate = useNavigate();
+    const [userId, setUserId] = useState('');  // user_id 상태 추가
     const [isMorningPerson, setIsMorningPerson] = useState(true);
     const [isSmoker, setIsSmoker] = useState(true);
     const [snoreLevel, setSnoreLevel] = useState(3);
@@ -67,11 +69,39 @@ function MatchingRoommates() {
         setSelectedCategories(categories);
     };
 
+
+    useEffect(() => {
+        // ✅ API로 user_id 가져오기
+        const fetchUserId = async () => {
+            try {
+                const response = await getProfile();
+                setUserId(response.user_id);  // user_id를 상태로 저장
+            } catch (error) {
+                console.error("유저 ID 불러오기 오류:", error);
+            }
+        };
+        fetchUserId();
+    }, []);
+
+
     // 프로필 저장 준비 함수
-    const handleSaveProfile = () => {
+    const handleSaveProfile = async () => {
         updateCategories();
-        alert('프로필이 저장되었습니다.');
-        // 여기에 API 연결 준비 (추후 axios.post로 프로필 저장)
+        const profileData = {
+            user_id: userId,  // 추후 로그인 상태와 연동
+            is_morning_person: isMorningPerson,
+            is_smoker: isSmoker,
+            snore_level: snoreLevel,
+            hygiene_level: hygieneLevel,
+            hall_type: hallType,
+        };
+
+        try {
+            await saveProfile(profileData);
+            alert('프로필이 성공적으로 저장되었습니다.');
+        } catch (error) {
+            alert('프로필 저장 중 오류가 발생했습니다.');
+        }
     };
 
     return (
