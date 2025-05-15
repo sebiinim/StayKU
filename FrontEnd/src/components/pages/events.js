@@ -9,8 +9,8 @@ function Events() {
         navigate('/dashboard');
     };
 
-    const goToChatting = () => {
-    navigate('/Chatting');
+    const goToCommunity = () => {
+    navigate('/Community');
     };
 
     const goToReservation = () => {
@@ -18,7 +18,7 @@ function Events() {
     };
 
     const goToLaundry_help = () => {
-    navigate('/LaundryHelp');  // LaundryHelp 페이지로 이동
+    navigate('/laundry_help');  // Laundry_help 페이지로 이동
     };
 
     const goToEvents = () => {
@@ -26,7 +26,7 @@ function Events() {
     };
 
     const goToinformation = () => {
-    navigate('/information');  // LaundryHelp 페이지로 이동
+    navigate('/information');  // Laundry_help 페이지로 이동
     };
 
     const goToMatchingRoommates = () => {
@@ -34,15 +34,15 @@ function Events() {
     };
 
     const goToNews = () => {
-    navigate('/News');  // LaundryHelp 페이지로 이동
+    navigate('/News');  // Laundry_help 페이지로 이동
     };
 
     const goToFacilities = () => {
         navigate('/Facilities');  // Reservation 페이지로 이동
     };
 
-    const goToRoommateRegistration = () => {
-    navigate('/RoommateRegistration');  // LaundryHelp 페이지로 이동
+    const goToCategories = () => {
+    navigate('/Categories');  // Laundry_help 페이지로 이동
     };
     return (
         <div className="Events">
@@ -56,16 +56,16 @@ function Events() {
                         <li className="menu-item">
                             Board
                             <ul className="submenu">
-                                <li onClick={goToChatting}>Chatting</li>
+                                <li onClick={goToCommunity}>Community</li>
                                 <li onClick={goToMatchingRoommates}>Matching Roommates</li>
-                                <li onClick={goToRoommateRegistration}>Roommate Registration</li>
+                                <li onClick={goToCategories}>Categories</li>
                             </ul>
                         </li>
                         <li className="menu-item">
                             Laundry
                             <ul className="submenu">
                                 <li onClick={goToReservation}>Reservation</li>
-                                <li onClick={{goToLaundry_help}}>Help</li>
+                                <li onClick={goToLaundry_help}>Help</li>
                             </ul>
                         </li>
                         <li className="menu-item">

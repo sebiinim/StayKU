@@ -3,7 +3,7 @@ import axiosInstance from './axiosInstance';
 // 채팅 저장 API 호출
 export const saveChatMessage = async (fromUser, toUser, message) => {
     try {
-        const response = await axiosInstance.post('/api/chat', {
+        const response = await axiosInstance.post('/roommate/chat', {
             from_user: fromUser,
             to_user: toUser,
             message: message,
@@ -17,7 +17,7 @@ export const saveChatMessage = async (fromUser, toUser, message) => {
 // 채팅 내역 조회 API 호출 (양방향)
 export const fetchChatHistory = async (user1, user2) => {
     try {
-        const response = await axiosInstance.get(`/api/chat/${user1}/${user2}`);
+        const response = await axiosInstance.get(`/roommate/chat/${user1}/${user2}`);
         return response.data;
     } catch (error) {
         throw new Error(error.response?.data?.detail || '채팅 내역 조회 실패');
@@ -27,7 +27,7 @@ export const fetchChatHistory = async (user1, user2) => {
 // 나와 채팅했던 상대 조회 API 호출
 export const fetchChatPartners = async (userId) => {
     try {
-        const response = await axiosInstance.get(`/api/chat_partners/${userId}`);
+        const response = await axiosInstance.get(`/roommate/chat_partners/${userId}`);
         return response.data;
     } catch (error) {
         throw new Error(error.response?.data?.detail || '채팅 상대 조회 실패');

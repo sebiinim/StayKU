@@ -1,0 +1,128 @@
+/* 채팅창 스타일 */
+.Chatting-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - 60px); /* 메뉴바 공간 확보 */
+    background-color: #282c34;
+    color: white;
+    font-size: 35px;
+    margin-top: 60px; /* 메뉴바 높이만큼 띄움 */
+    position: relative;
+    z-index: 1;
+}
+
+.Chatting-partner-list {
+    list-style-type: none;
+    padding: 0;
+    width: 100%;
+}
+
+.Chatting-partner-list li {
+    padding: 15px;
+    margin: 5px 0;
+    background-color: #333;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    font-size: 1.2rem;
+    color: white;
+}
+
+.Chatting-partner-list li:hover {
+    background-color: #444;
+}
+
+.Chatting-chat-box {
+    margin-top: 20px;
+    background-color: #1e1e1e;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.5);
+    color: white;
+}
+
+.Chatting-chat-history {
+    max-height: 300px;
+    overflow-y: auto;
+    background-color: #2e2e2e;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.Chatting-input {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    background-color: #333;
+    color: white;
+    border-radius: 4px;
+}
+
+.Chatting-send-button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    margin-top: 5px;
+    border: none;
+    border-radius: 4px;
+}
+
+
+/* 유저 목록 스타일 */
+.Chatting-user-list {
+    margin-top: 20px;
+    background-color: #333;
+    padding: 10px;
+    border-radius: 8px;
+    color: white;
+}
+
+.Chatting-user-list h3 {
+    font-size: 1.5rem;
+}
+
+.Chatting-user-list ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.Chatting-user-list li {
+    padding: 8px;
+    margin: 5px 0;
+    background-color: #444;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.Chatting-user-list li:hover {
+    background-color: #555;
+}
+
+/* 유저 정보 스타일 */
+.Chatting-user-info {
+    margin-top: 20px;
+    background-color: #1e1e1e;
+    padding: 15px;
+    border-radius: 8px;
+    color: white;
+}
+
+.Chatting-user-info h4 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.Chatting-user-info ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.Chatting-user-info li {
+    padding: 5px;
+    background-color: #2e2e2e;
+    border-radius: 4px;
+    margin: 5px 0;
+}

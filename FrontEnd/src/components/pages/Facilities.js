@@ -9,8 +9,8 @@ function Facilities() {
         navigate('/dashboard');
     };
 
-    const goToChatting = () => {
-    navigate('/Chatting');
+    const goToCommunity = () => {
+    navigate('/Community');
     };
 
     const goToReservation = () => {
@@ -18,7 +18,7 @@ function Facilities() {
     };
 
     const goToLaundry_help = () => {
-    navigate('/LaundryHelp'); 
+    navigate('/laundry_help'); 
     };
 
     const goToEvents = () => {
@@ -41,8 +41,8 @@ function Facilities() {
         navigate('/Facilities'); 
     };
 
-    const goToRoommateRegistration = () => {
-    navigate('/RoommateRegistration');
+    const goToCategories = () => {
+    navigate('/Categories');
     };
     return (
         <div className="Facilities">
@@ -56,16 +56,16 @@ function Facilities() {
                         <li className="menu-item">
                             Board
                             <ul className="submenu">
-                                <li onClick={goToChatting}>Chatting</li>
+                                <li onClick={goToCommunity}>Community</li>
                                 <li onClick={goToMatchingRoommates}>Matching Roommates</li>
-                                <li onClick={goToRoommateRegistration}>Roommate Registration</li>
+                                <li onClick={goToCategories}>Categories</li>
                             </ul>
                         </li>
                         <li className="menu-item">
                             Laundry
                             <ul className="submenu">
                                 <li onClick={goToReservation}>Reservation</li>
-                                <li onClick={{goToLaundry_help}}>Help</li>
+                                <li onClick={goToLaundry_help}>Help</li>
                             </ul>
                         </li>
                         <li className="menu-item">
