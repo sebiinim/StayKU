@@ -1,10 +1,8 @@
-
 from fastapi import APIRouter, HTTPException, Path
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 
-from server.db.get_connection import \
-    get_connection  # get_connection 함수 import 필요
+from server.db.get_connection import get_connection  # get_connection 함수 import 필요
 
 router = APIRouter()
 

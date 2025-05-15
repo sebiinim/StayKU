@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const axiosInstance = axios.create({
-    baseURL: 'https://stayku.orender.com',  // 서버의 기본 주소 설정
+    baseURL: 'https://stayku.onrender.com',  // 서버의 기본 주소 설정
     headers: {
         'Content-Type': 'application/json',
     },
@@ -13,10 +13,12 @@ export const saveChatMessage = async (fromUser, toUser, message) => {
         const response = await axiosInstance.post('/roommate/chat', {
             from_user: fromUser,
             to_user: toUser,
-            message: message,
+            message: message
         });
+        console.log(typeof toUser, toUser);
         return response.data;
     } catch (error) {
+        console.error("🔥 Full error response:", error.response?.data);
         throw new Error(error.response?.data?.detail || '채팅 저장 실패');
     }
 };
