@@ -1,6 +1,6 @@
-from fastapi import APIRouter, HTTPException, Request
-from pydantic import BaseModel, conint
+from fastapi import APIRouter, HTTPException, Path
 from fastapi.responses import JSONResponse
+from pydantic import BaseModel, conint
 
 from server.db.get_connection import get_connection
 
@@ -31,7 +31,6 @@ class ProfileData(BaseModel):
         }
 
 
-# ------------------ 2-1. 룸메이트 성향 등록 ------------------
 @router.post("/profile", tags=["roommate"], summary="내 프로필 등록")
 def register_profile(data: ProfileData):
     try:
@@ -109,7 +108,7 @@ def register_profile(data: ProfileData):
         return JSONResponse(
             status_code=200,
             content={
-                "status": "profile_saved",
+                "status": "success",
                 "profile": ProfileData(
                     user_id=data.user_id,
                     is_morning_person=data.is_morning_person,
@@ -124,3 +123,35 @@ def register_profile(data: ProfileData):
     except Exception as e:
         # 예외 처리
         raise HTTPException(status_code=500, detail=f"서버 오류: {str(e)}")
+
+
+@router.get("/profile-value/{user_id}", tags=["roommate"], summary="내 프로필 값 조회")
+def get_user_tags(user_id: str = Path(..., example="sebin")):
+    try:
+        conn = get_connection()
+        cur = conn.cursor(dictionary=True)
+        cur.execute("SELECT * FROM roommate_profiles WHERE user_id = %s", (user_id,))
+        result = cur.fetchone()
+        cur.close()
+        conn.close()
+
+        return result
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.get("/profile-tag/{user_id}", tags=["roommate"], summary="내 프로필 태그 조회")
+def get_user_tags(user_id: str = Path(..., example="sebin")):
+    try:
+        conn = get_connection()
+        cur = conn.cursor(dictionary=True)
+        cur.execute("SELECT * FROM user_tags WHERE user_id = %s", (user_id,))
+        result = cur.fetchone()
+        cur.close()
+        conn.close()
+
+        return result
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))

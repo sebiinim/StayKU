@@ -1,8 +1,9 @@
-from fastapi import APIRouter, HTTPException, Request, Path, Query
+from typing import List
+
+from fastapi import APIRouter, HTTPException
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
-from typing import List, Optional
-import random
+
 from server.db.get_connection import get_connection
 
 router = APIRouter()
@@ -14,8 +15,13 @@ class TeamRequest(BaseModel):
     members: List[str]
     hall_type: str
 
+    class Config:
+        json_schema_extra = {
+            "example": {"members": ["sebin", "ghkd", "jun"], "hall_type": "old_man"}
+        }
 
-@router.post("/team")
+
+@router.post("/teams", tags=["roommate"], summary="룸메이트 팀 등록")
 def register_team(data: TeamRequest):
     try:
         members = data.members
@@ -33,8 +39,8 @@ def register_team(data: TeamRequest):
 
         for user_id in members:
             cur.execute(
-                "INSERT INTO roommate_team_members (team_id, user_id) VALUES (%s, %s)",
-                (team_id, user_id),
+                "INSERT INTO roommate_team_members (team_id, hall_type, user_id) VALUES (%s, %s, %s)",
+                (team_id, hall_type, user_id),
             )
 
         conn.commit()

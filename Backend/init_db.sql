@@ -6,6 +6,7 @@ DROP TABLE IF EXISTS roommate_team_members;
 DROP TABLE IF EXISTS roommate_teams;
 DROP TABLE IF EXISTS roommate_chats;
 DROP TABLE IF EXISTS roommate_profiles;
+DROP TABLE IF EXISTS roommate_connections;
 DROP TABLE IF EXISTS user_tags;
 DROP TABLE IF EXISTS reservations;
 DROP TABLE IF EXISTS washers;
@@ -22,7 +23,8 @@ CREATE TABLE IF NOT EXISTS washers (
     id INT AUTO_INCREMENT PRIMARY KEY,
     status VARCHAR(10) NOT NULL,
     end_time DATETIME DEFAULT NULL,
-    remaining_time INT
+    remaining_time INT,
+    user_id VARCHAR(100)
 );
 
 -- 2-1. 세탁기 10개 생성
@@ -57,8 +59,8 @@ CREATE TABLE IF NOT EXISTS roommate_profiles (
     snore_level INT,
     hygiene_level INT,
     hall_type ENUM('old_man', 'old_woman', 'new_man', 'new_woman'),
-    PRIMARY KEY(user_id),
-    FOREIGN KEY(user_id) REFERENCES users(user_id) ON DELETE CASCADE
+    PRIMARY KEY(user_id)
+    # FOREIGN KEY(user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
 -- 5. 채팅
@@ -79,9 +81,10 @@ CREATE TABLE IF NOT EXISTS roommate_teams (
 -- 7. 팀 구성원
 CREATE TABLE IF NOT EXISTS roommate_team_members (
     team_id INT,
+    hall_type ENUM('old_man', 'old_woman', 'new_man', 'new_woman'),
     user_id VARCHAR(100),
-    PRIMARY KEY(team_id, user_id),
-    FOREIGN KEY(team_id) REFERENCES roommate_teams(team_id) ON DELETE CASCADE
+    PRIMARY KEY(team_id, user_id)
+    # FOREIGN KEY(team_id) REFERENCES roommate_teams(team_id) ON DELETE CASCADE
 );
 
 -- 8. 태그
@@ -91,8 +94,8 @@ CREATE TABLE IF NOT EXISTS user_tags (
     is_smoker VARCHAR(30),
     snore_level VARCHAR(30),
     hygiene_level VARCHAR(30),
-    PRIMARY KEY(user_id),
-    FOREIGN KEY(user_id) REFERENCES users(user_id) ON DELETE CASCADE
+    PRIMARY KEY(user_id)
+    # FOREIGN KEY(user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
 -- 9. 룸메 등록
@@ -101,6 +104,6 @@ CREATE TABLE IF NOT EXISTS roommate_connections (
     user_id VARCHAR(100) NOT NULL,
     partner_id VARCHAR(100) NOT NULL,
     status ENUM('confirmed', 'pending') DEFAULT 'pending',
-    hall_type ENUM('신관', '구관') NOT NULL,
+    hall_type ENUM('old_man', 'old_woman', 'new_man', 'new_woman') NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
