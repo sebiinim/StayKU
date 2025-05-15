@@ -73,7 +73,7 @@ CREATE TABLE IF NOT EXISTS roommate_chats (
 -- 6. 룸메이트 팀
 CREATE TABLE IF NOT EXISTS roommate_teams (
     team_id INT AUTO_INCREMENT PRIMARY KEY,
-    hall_type ENUM('신관', '구관')
+    hall_type ENUM('old_man', 'old_woman', 'new_man', 'new_woman')
 );
 
 -- 7. 팀 구성원

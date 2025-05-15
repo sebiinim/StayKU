@@ -8,6 +8,7 @@ from server.db.get_connection import get_connection
 router = APIRouter()
 
 
+# ss
 # Pydantic 모델 정의
 class ProfileData(BaseModel):
     user_id: str
