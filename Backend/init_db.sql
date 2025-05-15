@@ -14,7 +14,8 @@ DROP TABLE IF EXISTS users;
 
 -- 1. 사용자 계정 테이블
 CREATE TABLE IF NOT EXISTS users (
-    user_id VARCHAR(100) PRIMARY KEY,
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id VARCHAR(100),
     password VARCHAR(100) NOT NULL
 );
 
@@ -22,9 +23,9 @@ CREATE TABLE IF NOT EXISTS users (
 CREATE TABLE IF NOT EXISTS washers (
     id INT AUTO_INCREMENT PRIMARY KEY,
     status VARCHAR(10) NOT NULL,
+    user_id VARCHAR(100),
     end_time DATETIME DEFAULT NULL,
-    remaining_time INT,
-    user_id VARCHAR(100)
+    remaining_time INT
 );
 
 -- 2-1. 세탁기 10개 생성
@@ -53,13 +54,13 @@ CREATE TABLE IF NOT EXISTS reservations (
 
 -- 4. 룸메이트 프로필 (외래키 연결)
 CREATE TABLE IF NOT EXISTS roommate_profiles (
+    id INT AUTO_INCREMENT PRIMARY KEY,
     user_id VARCHAR(100),
     is_morning_person BOOLEAN,
     is_smoker BOOLEAN,
     snore_level INT,
     hygiene_level INT,
-    hall_type ENUM('old_man', 'old_woman', 'new_man', 'new_woman'),
-    PRIMARY KEY(user_id)
+    hall_type ENUM('old_man', 'old_woman', 'new_man', 'new_woman')
     # FOREIGN KEY(user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
@@ -80,21 +81,20 @@ CREATE TABLE IF NOT EXISTS roommate_teams (
 
 -- 7. 팀 구성원
 CREATE TABLE IF NOT EXISTS roommate_team_members (
-    team_id INT,
+    team_id INT AUTO_INCREMENT PRIMARY KEY,
     hall_type ENUM('old_man', 'old_woman', 'new_man', 'new_woman'),
-    user_id VARCHAR(100),
-    PRIMARY KEY(team_id, user_id)
+    user_id VARCHAR(100)
     # FOREIGN KEY(team_id) REFERENCES roommate_teams(team_id) ON DELETE CASCADE
 );
 
 -- 8. 태그
 CREATE TABLE IF NOT EXISTS user_tags (
+    id INT AUTO_INCREMENT PRIMARY KEY,
     user_id VARCHAR(100),
     is_morning_person VARCHAR(30),
     is_smoker VARCHAR(30),
     snore_level VARCHAR(30),
-    hygiene_level VARCHAR(30),
-    PRIMARY KEY(user_id)
+    hygiene_level VARCHAR(30)
     # FOREIGN KEY(user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
