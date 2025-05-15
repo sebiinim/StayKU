@@ -10,6 +10,10 @@ const axiosInstance = axios.create({
 // 채팅 저장 API 호출
 export const saveChatMessage = async (fromUser, toUser, message) => {
     try {
+        if (!toUser) {
+            alert("채팅할 상대를 먼저 선택하세요.");
+            return;
+        }
         const response = await axiosInstance.post('/roommate/chat', {
             from_user: fromUser,
             to_user: toUser,
