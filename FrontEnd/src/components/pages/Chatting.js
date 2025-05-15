@@ -53,12 +53,19 @@ function Chatting() {
         loadUserList();
     }, []);
 
+
+    useEffect(() => {
+        if (selectedUser) {
+            loadChatHistory(selectedUser.user_id); // 또는 selectedUser.id
+        }
+    }, [selectedUser]);
+
+
     // 채팅 내역 불러오기
     const loadChatHistory = async (partnerId) => {
         try {
             const result = await fetchChatHistory(currentUser, partnerId);
             setChatHistory(result);
-            setSelectedUser(partnerId);
         } catch (error) {
             alert(`Error loading chat history: ${error.message}`);
         }
@@ -133,7 +140,14 @@ function Chatting() {
                 <h3>채팅 상대 목록</h3>
                 <ul>
                     {partners.map((partner, index) => (
-                        <li key={index} onClick={() => loadChatHistory(partner)}>
+                        <li key={index} onClick={() => {
+                            const userObj = users.find((u) => u.user_id === partner);
+                            if(userObj){
+                                setSelectedUser(userObj);
+                            } else{
+                                alert('사용자 정보를 찾을 수 없습니다.');
+                            }
+                        }}>
                             {partner}
                         </li>
                     ))}
