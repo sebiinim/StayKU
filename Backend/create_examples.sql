@@ -1,3 +1,5 @@
+USE laundry_db;
+
 -- users
 INSERT INTO users (user_id, password) VALUES
 ('sebin', 'pass123'),
@@ -27,12 +29,12 @@ INSERT INTO roommate_profiles (user_id, is_morning_person, is_smoker, snore_leve
 ('bin', TRUE, FALSE, 4, 2, 'new_man');
 
 INSERT INTO user_tags (user_id, is_morning_person, is_smoker, snore_level, hygiene_level) VALUES
-('sebin', '#아침형', '#흡연', '코골이 적음', '청소 자주 함'),
-('hyeon', '#저녁형', '#흡연', '코골이 적음', '청소 자주 함'),
-('jun', '#아침형', '#비흡연', '코골이 보통', '청소 적당히 함'),
-('yeon', '#저녁형', '#흡연', '코골이 적음', '청소 자주 함'),
-('ghkd', '#아침형', '#비흡연', '코골이 많음', '청소 적당히 함'),
-('bin', '#아침형', '#비흡연', '코골이 많음', '청소 자주 안 함');
+('sebin', '아침형', '흡연', '코골이 적음', '청소 자주 함'),
+('hyeon', '저녁형', '흡연', '코골이 적음', '청소 자주 함'),
+('jun', '아침형', '비흡연', '코골이 보통', '청소 적당히 함'),
+('yeon', '저녁형', '흡연', '코골이 적음', '청소 자주 함'),
+('ghkd', '아침형', '비흡연', '코골이 많음', '청소 적당히 함'),
+('bin', '아침형', '비흡연', '코골이 많음', '청소 자주 안 함');
 
 -- roommate_chats
 INSERT INTO roommate_chats (from_user, to_user, message) VALUES
@@ -44,14 +46,14 @@ INSERT INTO roommate_chats (from_user, to_user, message) VALUES
 ('sebin', 'yeon', '응 1번 세탁기!');
 
 -- roommate_team_members
-INSERT INTO roommate_team_members (hall_type, user_id) VALUES
-('new_woman', 'ghkd'),
-('new_woman', 'hyeon'),
-('new_man', 'jun'),
-('new_man', 'sebin'),
-('old_man', 'bin1'),
-('old_man', 'bin2'),
-('old_man', 'bin3');
+INSERT INTO roommate_team_members (team_id, hall_type, user_id) VALUES
+(1, 'new_woman', 'ghkd'),
+(1, 'new_woman', 'hyeon'),
+(2, 'new_man', 'jun'),
+(2, 'new_man', 'sebin'),
+(3, 'old_man', 'bin1'),
+(3, 'old_man', 'bin2'),
+(3, 'old_man', 'bin3');
 
 INSERT INTO roommate_teams (team_id, hall_type) VALUES
 (1, 'new_woman'),

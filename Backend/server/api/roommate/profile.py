@@ -62,14 +62,14 @@ def register_profile(data: ProfileData):
         )
 
         if data.is_morning_person:
-            is_morning_person_tag = "#아침형"
+            is_morning_person_tag = "아침형"
         else:
-            is_morning_person_tag = "#저녁형"
+            is_morning_person_tag = "저녁형"
 
         if data.is_smoker:
-            is_smoker_tag = "#흡연"
+            is_smoker_tag = "흡연"
         else:
-            is_smoker_tag = "#비흡연"
+            is_smoker_tag = "비흡연"
 
         if data.snore_level <= 2:
             snore_level_tag = "코골이 적음"
@@ -148,6 +148,22 @@ def get_user_tags(user_id: str = Path(..., example="sebin")):
         cur = conn.cursor(dictionary=True)
         cur.execute("SELECT * FROM user_tags WHERE user_id = %s", (user_id,))
         result = cur.fetchone()
+        cur.close()
+        conn.close()
+
+        return result
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.get("/profile-tag-all", tags=["roommate"], summary="전체 프로필 태그 조회")
+def get_user_tags():
+    try:
+        conn = get_connection()
+        cur = conn.cursor(dictionary=True)
+        cur.execute("SELECT * FROM user_tags")
+        result = cur.fetchall()
         cur.close()
         conn.close()
 
