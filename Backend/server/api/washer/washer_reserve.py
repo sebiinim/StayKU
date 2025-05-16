@@ -34,6 +34,10 @@ def reserve(data: WasherUser):
                 status_code=400, detail="세탁기가 즉시 사용 가능합니다."
             )
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> dd42488a5b40329a2df0dbb0cb4756313d484920
         # 세탁기 여러 대 예약 방지
         cur.execute("SELECT * from reservations where user_id = %s", (data.user_id,))
         res = cur.fetchall()

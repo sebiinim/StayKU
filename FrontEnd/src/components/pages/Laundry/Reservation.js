@@ -87,7 +87,15 @@ useEffect(() => {
         }
     };
     loadStatus();
+
+    // 상태를 주기적으로 업데이트하여 최신 상태 유지
+    const interval = setInterval(() => {
+        loadStatus();
+    }, 5000); // 5초마다 갱신
+
+    return () => clearInterval(interval);
 }, []);
+
 
 
 const handleReservation = async () => {
@@ -105,20 +113,13 @@ const handleReservation = async () => {
             return;
         }
 
-        // 예약 전에 최신 상태 확인
+        // 예약 직전에 최신 상태 불러오기
         const latestStatus = await fetchMachineStatus();
-        console.log(latestStatus)
-        
-        let statusMachineNumber;
-        if (machineType === "washer"){
-            statusMachineNumber = machineNumber - 1;
-        } else {
-            statusMachineNumber = machineNumber + 9
-        }
-        console.log(2)
-        console.log(latestStatus[statusMachineNumber])
-        console.log(2)
-        if (latestStatus[statusMachineNumber].status === 'in_use') {
+        const machineLabel = `${machineType} ${machineNumber}`;
+        console.log("예약 전 최신 상태 확인:", latestStatus);
+
+        // 최신 상태 확인 후 예약 가능 여부 판단
+        if (latestStatus[machineLabel] === 'available') {
             await reserveMachine(machineType, machineNumber, userId);
             alert('예약이 완료되었습니다.');
 
