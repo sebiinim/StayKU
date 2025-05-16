@@ -12,8 +12,8 @@ export const reserveMachine = async (type, machineId, userId) => {
         }
 
         const requestData = {
-            [`${type}_id`]: parsedMachineId,  // 숫자형 변환 필수
-            user_id: String(userId)           // 문자열로 변환
+            user_id: String(userId),           // 문자열로 변환
+            [`${type}_id`]: parsedMachineId  // 숫자형 변환 필수
         };
 
         console.log("예약 요청 데이터:", requestData);  // 디버깅용

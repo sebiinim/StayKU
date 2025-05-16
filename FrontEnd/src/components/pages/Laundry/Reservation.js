@@ -36,8 +36,11 @@ const openPopup = (machineType, machineNumber) => {
     }
 
     const machineLabel = `${machineType} ${machineNumber}`;
-    if (machineStatus[machineLabel] === 'in_use') {
-        alert('이미 사용 중인 기기입니다.');
+    console.log(1)
+    console.log(machineStatus[machineLabel])
+    console.log(1)
+    if (machineStatus[machineLabel] === 'available') {
+        alert('즉시 사용 가능한 기기입니다.');
         return;
     }
 
@@ -127,7 +130,7 @@ const handleReservation = async () => {
             setReservations([...reservations, { machine: currentMachine, date: selectedDate, time: selectedTime }]);
             setIsPopupOpen(false);
         } else {
-            alert('이미 사용 중인 세탁기입니다.');
+            alert('즉시 사용 가능한 기기입니다.');
         }
     } catch (error) {
         alert(error.message || '예약에 실패했습니다.');
@@ -189,13 +192,13 @@ const handleReservation = async () => {
                         const isUnavailable = machineStatus[machineLabel] === 'in_use';
                         return (
                             <div 
-                                key={machineLabel} 
-                                className={`machine ${isUnavailable ? 'unavailable' : 'available'}`} 
+                                key={machineLabel}
+                                className={`machine ${isUnavailable ? 'unavailable' : 'available'}`}
                                 onClick={() => openPopup('Washer', index + 1)}
                                 style={{ cursor: isUnavailable ? 'not-allowed' : 'pointer' }}
                             >
                                 W{index + 1}
-                            </div>
+                            </div>  
                         );
                     })}
                 </div>
