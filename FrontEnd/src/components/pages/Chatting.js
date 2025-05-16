@@ -122,19 +122,6 @@ function Chatting() {
                 </nav>
             </header>
 
-            {/* 유저 목록 */}
-            <div className="Chatting-user-list">
-                <h3>전체 유저 목록</h3>
-
-                <ul>
-                    {users.map((user, index) => (
-                        <li key={index} onClick={() => setSelectedUser(user)}>
-                            {user.id} - {user.user_id}
-                        </li>
-                    ))}
-                </ul>
-            </div>
-
             {/* 채팅 상대 목록 */}
             <div className="Chatting-partner-list">
                 <h3>채팅 상대 목록</h3>
@@ -149,6 +136,19 @@ function Chatting() {
                             }
                         }}>
                             {partner}
+                        </li>
+                    ))}
+                </ul>
+            </div>
+
+            {/* 유저 목록 */}
+            <div className="Chatting-user-list">
+                <h3>전체 유저 목록</h3>
+
+                <ul>
+                    {users.map((user, index) => (
+                        <li key={index} onClick={() => setSelectedUser(user)}>
+                            {user.id} - {user.user_id}
                         </li>
                     ))}
                 </ul>
