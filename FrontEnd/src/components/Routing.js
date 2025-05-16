@@ -19,6 +19,7 @@ import Facilities_AnamIHouse_room from './pages/aboutDorm/Facilities_AnamIHouse_
 import FacilitiesAnamGlobalHouse from './pages/aboutDorm/Facilities_AnamGlobalHouse';
 import FacilitiesAnamGlobalHouse_room from './pages/aboutDorm/Facilities_AnamGlobalHouse_room';
 import FacilitiesRoom from './pages/aboutDorm/FacilitiesRoom';
+import Information from './pages/aboutDorm/information';
 import RoommateRegistration from './pages/roommate/RoommateRegistration';
 import Chatting from './pages/roommate/Chatting';
 
@@ -30,10 +31,10 @@ function Routing() {
         <Route path="/login" element={<LoginForm />} />
         <Route path="/signup" element={<SignupForm />} />
         <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/laundry/reservation" element={<Reservation />} />
+        <Route path="/reservation" element={<Reservation />} />
         <Route path="/Events" element={<Events />} />
         <Route path="/aboutDorm" element={<aboutDorm />} />
-        <Route path="/MatchingRoommates" element={<MatchingRoommates />} />
+        <Route path="/match-roommates" element={<MatchingRoommates />} />
         <Route path="/News" element={<News />} />
         <Route path="/facilities" element={<Facilities_main />} />
         <Route path="/facilities/student" element={<FacilitiesStudent />} />
@@ -46,8 +47,9 @@ function Routing() {
         <Route path="/facilities/anamglobalhouse" element={<FacilitiesAnamGlobalHouse />} />
         <Route path="/facilities/anamglobalhouse/room" element={<FacilitiesAnamGlobalHouse_room />} />
         <Route path="/facilities/room" element={<FacilitiesRoom />} />
-        <Route path="/LaundryHelp" element={<LaundryHelp />} />
-        <Route path="/RoommateRegistration" element={<RoommateRegistration />} />
+        <Route path="/info" element={<Information />} /> 
+        <Route path="/laundry-help" element={<LaundryHelp />} />
+        <Route path="/register-roommate" element={<RoommateRegistration />} />
         <Route path="/Chatting" element={<Chatting />} />
       </Routes>
     </Router>

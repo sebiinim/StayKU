@@ -45,12 +45,15 @@ function RoommateRegistration() {
     const goToRoommateRegistration = () => {
     navigate('/RoommateRegistration');
     };
+
     return (
         <div className="RoommateRegistration">
             {/* 상단 메뉴바 */}
             <Header />
-          </div>
-
+            <div style={{ color: 'white', padding: '30px', fontSize: '20px', marginTop: '100px' }}>
+                <p>룸메이트 등록 페이지, 프론트는 구현 예정입니다.</p>
+            </div>
+        </div>
     )
 }
 export default RoommateRegistration;

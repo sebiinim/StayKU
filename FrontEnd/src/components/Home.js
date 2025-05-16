@@ -89,10 +89,6 @@ function Dashboard() {
                     <p>Event</p>
                     <p>Information</p>
                 </div>
-                <div className="section" id="help">
-                    <h2>Help</h2>
-                    <p>Information</p>
-                </div>
             </div>
         </div>
     );

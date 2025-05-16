@@ -16,7 +16,7 @@ const Header = () => {
             Roommate
             <ul className="submenu">
               <li onClick={() => navigate("/chatting")}>Chatting</li>
-              <li onClick={() => navigate("/match-roommates")}>Matching Roommates</li>
+              <li onClick={() => navigate("/match-roommates")}>Register Profile</li>
               <li onClick={() => navigate("/register-roommate")}>Roommate Registration</li>
             </ul>
           </li>
@@ -33,12 +33,6 @@ const Header = () => {
               <li onClick={() => navigate("/news")}>News</li>
               <li onClick={() => navigate("/facilities")}>Facilities</li>
               <li onClick={() => navigate("/events")}>Event</li>
-              <li onClick={() => navigate("/info")}>Information</li>
-            </ul>
-          </li>
-          <li className="menu-item">
-            Help
-            <ul className="submenu">
               <li onClick={() => navigate("/info")}>Information</li>
             </ul>
           </li>
