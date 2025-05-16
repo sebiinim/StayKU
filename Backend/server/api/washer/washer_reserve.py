@@ -34,6 +34,29 @@ def reserve(data: WasherUser):
                 status_code=400, detail="세탁기가 즉시 사용 가능합니다."
             )
 
+
+        # 1. 예약 가능 여부 확인
+        cur.execute("SELECT status FROM washers WHERE id = %s", (machine_id,))
+        status = cur.fetchone()
+
+        if not status or status[0] != 'available':
+            raise HTTPException(status_code=400, detail="해당 세탁기는 사용 중입니다.")
+
+        # 2. 상태를 in_use로 업데이트
+        update_query = """
+            UPDATE washers 
+            SET status = 'in_use', user_id = %s 
+            WHERE id = %s
+        """
+        cur.execute(update_query, (user_id, machine_id))
+        conn.commit()
+
+        # 3. 상태 조회로 확인
+        cur.execute("SELECT * FROM washers WHERE id = %s", (machine_id,))
+        updated_status = cur.fetchone()
+
+        return {"message": "예약 완료", "status": updated_status}
+
         # 세탁기 여러 대 예약 방지
         cur.execute("SELECT * from reservations where user_id = %s", (data.user_id,))
         res = cur.fetchall()

@@ -26,17 +26,27 @@ function Reservation() {
         }
     }, [navigate]);
 
-    const openPopup = (machineType, machineNumber) => {
-        const machineLabel = `${machineType} ${machineNumber}`;
-        if (machineStatus[machineLabel] === 'in_use') {
-            alert('이미 사용 중인 기기입니다.');
-            return;
-        }
-        setCurrentMachine(machineLabel);
-        setSelectedMachine(machineLabel);
-        setMachineType(machineType.toLowerCase());
-        setIsPopupOpen(true);
-    };
+// 예약 팝업 열기 함수 수정
+const openPopup = (machineType, machineNumber) => {
+    // Machine ID가 올바른지 확인
+    if (isNaN(machineNumber) || machineNumber <= 0) {
+        console.error("잘못된 기기 번호입니다:", machineNumber);
+        alert("기기 번호가 올바르지 않습니다.");
+        return;
+    }
+
+    const machineLabel = `${machineType} ${machineNumber}`;
+    if (machineStatus[machineLabel] === 'in_use') {
+        alert('이미 사용 중인 기기입니다.');
+        return;
+    }
+
+    setCurrentMachine(machineLabel);
+    setSelectedMachine(machineLabel);
+    setMachineType(machineType.toLowerCase());
+    setIsPopupOpen(true);
+};
+
 
     const closePopup = () => setIsPopupOpen(false);
 
@@ -52,43 +62,67 @@ function Reservation() {
     const goToDashBoard = () => navigateTo('/dashboard');
     const goToReservation = () => navigateTo('/laundry/reservation');
 
-    // 예약 상태 불러오기
-    useEffect(() => {
-        const loadStatus = async () => {
-            try {
-                const data = await fetchMachineStatus();
-                const statusMap = {};
-                data.forEach(item => {
-                    const type = item.type === 'washer' ? 'Washer' : 'Dryer';
-                    statusMap[`${type} ${item.id}`] = item.status;
-                });
-                setMachineStatus(statusMap);
-            } catch (error) {
-                alert('기기 상태를 불러오는 데 실패했습니다.');
-            }
-        };
-        loadStatus();
-    }, []);
+// 예약 상태 불러오기
+useEffect(() => {
+    const loadStatus = async () => {
+        try {
+            const data = await fetchMachineStatus();
+            const statusMap = {};
 
-    const handleReservation = async () => {
-        if (!selectedDate || !selectedTime) {
-            alert('날짜와 시간을 모두 입력하세요.');
+            data.forEach(item => {
+                const type = item.type === 'washer' ? 'Washer' : 'Dryer';
+                const machineLabel = `${type} ${item.id}`;
+                statusMap[machineLabel] = item.status;
+            });
+
+            console.log("불러온 상태:", statusMap);  // 디버깅용
+            setMachineStatus(statusMap);
+        } catch (error) {
+            console.error("기기 상태 불러오기 오류:", error);
+            alert('기기 상태를 불러오는 데 실패했습니다.');
+        }
+    };
+    loadStatus();
+}, []);
+
+
+const handleReservation = async () => {
+    if (!selectedDate || !selectedTime) {
+        alert('날짜와 시간을 모두 입력하세요.');
+        return;
+    }
+
+    try {
+        // machineId가 올바르게 파싱되는지 확인
+        const machineNumber = parseInt(currentMachine.split(' ')[1]);
+        if (isNaN(machineNumber)) {
+            alert('기기 번호가 올바르지 않습니다.');
+            console.error("잘못된 Machine ID:", currentMachine);
             return;
         }
 
-        try {
-            await reserveMachine(machineType, currentMachine);
+        // 예약 전에 최신 상태 확인
+        const latestStatus = await fetchMachineStatus();
+        const machineLabel = `${machineType} ${machineNumber}`;
+        if (latestStatus[machineLabel] === 'available') {
+            await reserveMachine(machineType, machineNumber, userId);
             alert('예약이 완료되었습니다.');
+
+            // 예약 후 상태를 다시 불러옴
+            const updatedStatus = await fetchMachineStatus();
+            console.log("예약 후 상태 확인:", updatedStatus);
+            setMachineStatus(updatedStatus);
+
             setReservations([...reservations, { machine: currentMachine, date: selectedDate, time: selectedTime }]);
             setIsPopupOpen(false);
-            setMachineStatus(prevStatus => ({
-                ...prevStatus,
-                [currentMachine]: 'in_use'
-            }));
-        } catch (error) {
-            alert(error.message || '예약에 실패했습니다.');
+        } else {
+            alert('이미 사용 중인 세탁기입니다.');
         }
-    };
+    } catch (error) {
+        alert(error.message || '예약에 실패했습니다.');
+        console.error("예약 오류:", error);
+    }
+};
 
 
 

@@ -6,9 +6,14 @@ export const reserveMachine = async (type, machineId, userId) => {
         const endpoint = type === 'washer' ? '/washer/reserve' : '/dryer/reserve';
 
         // 데이터 형식 검증 및 전송
+        const parsedMachineId = parseInt(machineId);
+        if (isNaN(parsedMachineId)) {
+            throw new Error("Machine ID가 올바르지 않습니다.");
+        }
+
         const requestData = {
-            [`${type}_id`]: parseInt(machineId),  // 숫자형 변환 필수
-            user_id: String(userId)               // 문자열로 변환
+            [`${type}_id`]: parsedMachineId,  // 숫자형 변환 필수
+            user_id: String(userId)           // 문자열로 변환
         };
 
         console.log("예약 요청 데이터:", requestData);  // 디버깅용
@@ -24,6 +29,7 @@ export const reserveMachine = async (type, machineId, userId) => {
         throw new Error(error.response?.data?.message || '예약 실패');
     }
 };
+
 
 // 상태 조회 함수
 export const fetchMachineStatus = async () => {
