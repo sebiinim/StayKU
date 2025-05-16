@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Facilities.css';
+import Header from '../../Header';
 
 function Facilities() {
     const navigate = useNavigate();
@@ -83,7 +84,7 @@ function Facilities() {
         navigate('/RoommateRegistration');
     };
 
-    const goToRoomPage = () => navigate('/facilities/anamihouse/room');
+    const goToRoomPage = () => navigate('/facilities/anamglobalhouse/room');
     const goToFacilities_Student = () => navigate('/facilities/student');
     const goToFacilities_Frontier = () => navigate('/facilities/frontier');
     const goToFacilities_CJHouse = () => navigate('/facilities/cjhouse');
@@ -93,74 +94,37 @@ function Facilities() {
     return (
         <div className="Facilities">
             {/* 상단 메뉴바 */}
-            <header className="top_left">
-                <div className="logo" onClick={goToDashboard} style={{ cursor: "pointer" }}>
-                    StayKU
-                </div>
-                <nav className="navbar">
-                    <ul className="menu">
-                        <li className="menu-item">
-                            Board
-                            <ul className="submenu">
-                                <li onClick={goToChatting}>Chatting</li>
-                                <li onClick={goToMatchingRoommates}>Matching Roommates</li>
-                                <li onClick={goToRoommateRegistration}>Roommate Registration</li>
-                            </ul>
-                        </li>
-                        <li className="menu-item">
-                            Laundry
-                            <ul className="submenu">
-                                <li onClick={goToReservation}>Reservation</li>
-                                <li onClick={goToLaundry_help}>Help</li>
-                            </ul>
-                        </li>
-                        <li className="menu-item">
-                            About Dormitory
-                            <ul className="submenu">
-                                <li onClick={goToNews}>News</li>
-                                <li onClick={goToFacilities}>Facilities</li>
-                                <li onClick={goToEvents}>Events</li>
-                            </ul>
-                        </li>
-                        <li className="menu-item">
-                            Help
-                            <ul className="submenu">
-                                <li onClick={goToinformation}>Information</li>
-                            </ul>
-                        </li>
-                    </ul>
-                </nav>
-            </header>
+            <Header />
 
             {/* 주요 시설 안내 */}
             <div className="facilities-container">
-                <h1 className="facilities-title">안암 인터내셔널 하우스 주요 시설 안내</h1>
+                <h1 className="facilities-title">안암 글로벌 하우스 주요 시설 안내</h1>
 
                 {/* 이전 버튼 */}
                 <button className="back-button" onClick={goToFacilities}>이전</button>
 
                 {/* 탭 메뉴 */}
                 <div className="tab-menu">
-                    <button className="tab-button active" onClick={goToFacilities_AnamIHouse}>기본정보</button>
+                    <button className="tab-button active" onClick={goToFacilities_AnamGlobalHouse}>기본정보</button>
                     <button className="tab-button" onClick={goToRoomPage}>방 구성 및 가격</button>
                 </div>
                 
                 {/* 건축개요 */}
                 <div className="table-section">
                     <h2>건축개요</h2>
-                    <table className="info-table">
+                    <table className="info-table" style={styles.table}>
                         <tbody>
                             <tr>
-                                <td>대지위치</td>
+                                <td style={styles.th}>대지위치</td>
                                 <td>서울특별시 성북구 안암로 145</td>
-                                <td>건축(연)면적</td>
-                                <td>1,975㎡</td>
+                                <td style={styles.th}>건축(연)면적</td>
+                                <td>1095㎡</td>
                             </tr>
                             <tr>
-                                <td>구조</td>
+                                <td style={styles.th}>구조</td>
                                 <td>철근콘크리트</td>
-                                <td>층수</td>
-                                <td>지하1층, 지상 5층</td>
+                                <td style={styles.th}>층수</td>
+                                <td>지하 1층, 지상 7층</td>
                             </tr>
                         </tbody>
                     </table>
@@ -169,30 +133,25 @@ function Facilities() {
                 {/* 입주 인원 및 호실 개수 */}
                 <div className="table-section">
                     <h2>입주 인원 및 호실 개수</h2>
-                    <table className="info-table">
+                    <table className="info-table" style={styles.table}>
                         <tbody>
                             <tr>
-                                <th>남학생동 (2층)</th>
-                                <th>여학생동 (1,3~4층)</th>
-                                <th>교원동</th>
+                                <th>남학생동</th>
+                                <th>여학생동</th>
                             </tr>
                             <tr>
                                 <td>
-                                    입주 가능 인원: 170명<br />
-                                    호실 수: 2인실 - 82실<br />
-                                    1인실 - 5실<br />
-                                    장애인실 - 1실
+                                    입주 가능 인원: 160명<br />
+                                    3인실: 20실<br />
+                                    2인실: 20실<br />
+                                    1인실: 58실<br />
+                                    장애인실: 2실
                                 </td>
                                 <td>
-                                    입주 가능 인원: 182명<br />
-                                    호실 수: 2인실 - 90실<br />
-                                    장애인실 - 2실
-                                </td>
-                                <td>
-                                    입주 가능 인원: 49명<br />
-                                    호실 수: 3인실 - 10실<br />
-                                    2인실 - 1실<br />
-                                    1인실 - 17실
+                                    입주 가능 인원: 246명<br />
+                                    3인실: 30실<br />
+                                    2인실: 30실<br />
+                                    1인실: 96실
                                 </td>
                             </tr>
                         </tbody>
@@ -202,35 +161,43 @@ function Facilities() {
                 {/* 층별 안내 */}
                 <div className="table-section">
                     <h2>층별 안내</h2>
-                    <table className="info-table">
+                    <table className="info-table" style={styles.table}>
                         <tbody>
                             <tr>
                                 <th>층 구분</th>
                                 <th>시설안내</th>
                             </tr>
                             <tr>
+                                <td>7층</td>
+                                <td>세미나실, 스터디룸, 여학생 숙소(G701-G713, G714-G728)</td>
+                            </tr>
+                            <tr>
+                                <td>6층</td>
+                                <td>세미나실, 휴게실, 여학생 숙소(G601-G613, G614-G628)</td>
+                            </tr>
+                            <tr>
                                 <td>5층</td>
-                                <td>세미나실, 세탁실, 가족실 501~526</td>
+                                <td>세미나실, 휴게실, 여학생 숙소(G501-G513, G514-G528)</td>
                             </tr>
                             <tr>
                                 <td>4층</td>
-                                <td>세미나실, 휴게실, 여자호실 401~445</td>
+                                <td>세미나실, 휴게실, 여학생 숙소(G401-G413, G414-G428)</td>
                             </tr>
                             <tr>
                                 <td>3층</td>
-                                <td>세미나실, 휴게실, 여자호실 301~345/ 가족실 346~347</td>
+                                <td>세미나실, 휴게실, 남학생 숙소(G301-G313, G314-G328)</td>
                             </tr>
                             <tr>
                                 <td>2층</td>
-                                <td>세미나실, 휴게실, 남자호실 201~252</td>
+                                <td>세미나실, 휴게실, 남학생 숙소(G201-G213, G214-G228)</td>
                             </tr>
                             <tr>
                                 <td>1층</td>
-                                <td>경비안내실, 다목적실, 간이식당, 유연물보관소, 샤워실, 경비원휴게실, 남자호실 101~136</td>
+                                <td>경비실, 취사실, 세탁실, 우편물 보관소, 남학생 숙소(G101-G117)</td>
                             </tr>
                             <tr>
                                 <td>지하 1층</td>
-                                <td>주차장, 세탁실</td>
+                                <td>주차장</td>
                             </tr>
                         </tbody>
                     </table>

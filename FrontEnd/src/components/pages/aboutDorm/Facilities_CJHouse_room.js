@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Facilities.css';
+import Header from '../../Header';
 
 function FacilitiesRoom() {
     const navigate = useNavigate();
@@ -64,45 +65,8 @@ function FacilitiesRoom() {
     return (
         <div className="FacilitiesRoom" style={{ marginTop: '50px' }}>
             {/* 상단 메뉴바 */}
-            <header className="top_left">
-                <div className="logo" onClick={goToDashboard} style={{ cursor: "pointer" }}>
-                    StayKU
-                </div>
-                <nav className="navbar">
-                    <ul className="menu">
-                        <li className="menu-item">
-                            Board
-                            <ul className="submenu">
-                                <li onClick={goToChatting}>Chatting</li>
-                                <li onClick={goToMatchingRoommates}>Matching Roommates</li>
-                                <li onClick={goToRoommateRegistration}>Roommate Registration</li>
-                            </ul>
-                        </li>
-                        <li className="menu-item">
-                            Laundry
-                            <ul className="submenu">
-                                <li onClick={goToReservation}>Reservation</li>
-                                <li onClick={goToLaundry_help}>Help</li>
-                            </ul>
-                        </li>
-                        <li className="menu-item">
-                            About Dormitory
-                            <ul className="submenu">
-                                <li onClick={goToNews}>News</li>
-                                <li onClick={goToFacilities}>Facilities</li>
-                                <li onClick={goToEvents}>Events</li>
-                            </ul>
-                        </li>
-                        <li className="menu-item">
-                            Help
-                            <ul className="submenu">
-                                <li onClick={goToinformation}>Information</li>
-                            </ul>
-                        </li>
-                    </ul>
-                </nav>
-            </header>
-
+            <Header />
+            
             {/* 방 구성 및 가격 */}
             <div className="facilities-container">
                 <h1 className="facilities-title">CJ 인터내셔널 하우스 방 구성 및 가격</h1>

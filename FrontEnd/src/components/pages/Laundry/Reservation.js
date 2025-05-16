@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { fetchMachineStatus, reserveMachine } from '../../../api/reservation';
 import './Reservation.css';
+import Header from '../../Header';
 
 function Reservation() {
     const [selectedDate, setSelectedDate] = useState('');
@@ -143,44 +144,7 @@ const handleReservation = async () => {
     return (
         <div className="reservation-container">
             {/* 상단 헤더 */}
-            <header className="top_left">
-                <div className="logo" onClick={goToDashBoard} style={{ cursor: "pointer" }}>
-                    StayKU
-                </div>
-                <nav className="navbar">
-                    <ul className="menu">
-                        <li className="menu-item">
-                            Board
-                            <ul className="submenu">
-                                <li onClick={goToChatting}>Chatting</li>
-                                <li onClick={goToMatchingRoommates}>Matching Roommates</li>
-                                <li onClick={goToRoommateRegistration}>Roommate Registration</li>
-                            </ul>
-                        </li>
-                        <li className="menu-item">
-                            Laundry
-                            <ul className="submenu">
-                                <li onClick={goToReservation}>Reservation</li>
-                                <li onClick={goToLaundry_help}>Help</li>
-                            </ul>
-                        </li>
-                        <li className="menu-item">
-                            About Dormitory
-                            <ul className="submenu">
-                                <li onClick={goToNews}>News</li>
-                                <li onClick={goToFacilities}>Facilities</li>
-                                <li onClick={goToEvents}>Event</li>
-                            </ul>
-                        </li>
-                        <li className="menu-item">
-                            Help
-                            <ul className="submenu">
-                                <li onClick={goToinformation}>information</li>
-                            </ul>
-                        </li>
-                    </ul>
-                </nav>
-            </header>
+            <Header />
 
             {/* 예약 상태 확인 - 세탁기*/}
             <div className="status-section">

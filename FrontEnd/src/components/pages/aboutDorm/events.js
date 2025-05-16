@@ -121,7 +121,7 @@ function Events() {
 
                     <h4>1. Announcement</h4>
                     <p>Anam Dormitory conducts fire drills every semester to increase safety awareness and practice emergency procedures.</p>
-                    <p>This semester's fire drill will be held on April 30.</p>
+                    <p>This semesters fire drill will be held on April 30.</p>
 
                     <h4>2. Period</h4>
                     <p>- April 30, 2025 (Wed) / (Without Notice)</p>

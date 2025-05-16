@@ -1,27 +1,26 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import LoginForm from './LoginForm';
-import SignupForm from './SignupForm';
+import LoginForm from './pages/auth/LoginForm';
+import SignupForm from './pages/auth/SignupForm';
 import { Home, Dashboard } from './Home';
-import Reservation from './pages/Laundry/Reservation';
-import LaundryHelp from './pages/LaundryHelp';
-import Events from './pages/events';
-import Information from './pages/information';
-import MatchingRoommates from './pages/MatchingRoommates';
-import News from './pages/News';
-import Facilities_main from './pages/Facilities_main';
-import FacilitiesStudent from './pages/Facilities_Student';
-import FacilitiesFrontier from './pages/Facilities_Frontier';
-import Facilities_Frontier_room from './pages/Facilities_Frontier_room';
-import FacilitiesCJHouse from './pages/Facilities_CJHouse';
-import Facilities_CJHouse_room from './pages/Facilities_CJHouse_room';
-import FacilitiesAnamIHouse from './pages/Facilities_AnamIHouse';
-import Facilities_AnamIHouse_room from './pages/Facilities_AnamIHouse_room';
-import FacilitiesAnamGlobalHouse from './pages/Facilities_AnamGlobalHouse';
-import FacilitiesAnamGlobalHouse_room from './pages/Facilities_AnamGlobalHouse_room';
-import FacilitiesRoom from './pages/FacilitiesRoom';
-import RoommateRegistration from './pages/RoommateRegistration';
-import Chatting from './pages/Chatting';
+import Reservation from './pages/laundry/Reservation';
+import LaundryHelp from './pages/laundry/LaundryHelp';
+import Events from './pages/aboutDorm/events';
+import MatchingRoommates from './pages/roommate/MatchingRoommates';
+import News from './pages/aboutDorm/News';
+import Facilities_main from './pages/aboutDorm/Facilities_main';
+import FacilitiesStudent from './pages/aboutDorm/Facilities_Student';
+import FacilitiesFrontier from './pages/aboutDorm/Facilities_Frontier';
+import Facilities_Frontier_room from './pages/aboutDorm/Facilities_Frontier_room';
+import FacilitiesCJHouse from './pages/aboutDorm/Facilities_CJHouse';
+import Facilities_CJHouse_room from './pages/aboutDorm/Facilities_CJHouse_room';
+import FacilitiesAnamIHouse from './pages/aboutDorm/Facilities_AnamIHouse';
+import Facilities_AnamIHouse_room from './pages/aboutDorm/Facilities_AnamIHouse_room';
+import FacilitiesAnamGlobalHouse from './pages/aboutDorm/Facilities_AnamGlobalHouse';
+import FacilitiesAnamGlobalHouse_room from './pages/aboutDorm/Facilities_AnamGlobalHouse_room';
+import FacilitiesRoom from './pages/aboutDorm/FacilitiesRoom';
+import RoommateRegistration from './pages/roommate/RoommateRegistration';
+import Chatting from './pages/roommate/Chatting';
 
 function Routing() {
   return (
@@ -33,7 +32,7 @@ function Routing() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/laundry/reservation" element={<Reservation />} />
         <Route path="/Events" element={<Events />} />
-        <Route path="/information" element={<Information />} />
+        <Route path="/aboutDorm" element={<aboutDorm />} />
         <Route path="/MatchingRoommates" element={<MatchingRoommates />} />
         <Route path="/News" element={<News />} />
         <Route path="/facilities" element={<Facilities_main />} />
